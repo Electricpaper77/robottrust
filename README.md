@@ -114,3 +114,7 @@ Speedup uses the matching Ray one-worker baseline, not serial B1. Serial B1 timi
 These lightweight evaluations include serial integrity verification and canonical reduction; negative scaling is valid evidence. No sleeps or artificial workload are used.
 
 The measurements show modest gains over one Ray worker, not linear scaling. Eight workers were slower than four for 1K and 100K inputs. Serial B1 remains substantially faster than the Ray execution layer for these inexpensive metrics; B2 establishes worker correctness and measured overhead rather than a production throughput claim.
+
+## B3.2 local streaming transport
+
+Pinned Redpanda and confluent-kafka connect acknowledged publishing to the B3.1 durable ledger with manual offset commits. The contract is at-least-once delivery plus idempotent durable ingestion. See [transport setup, guarantees and validation](docs/b3-transport.md). B3.3 replay/reconstruction is not implemented.

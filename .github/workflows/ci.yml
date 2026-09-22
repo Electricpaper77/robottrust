@@ -1,4 +1,4 @@
-name: B1 and B2 validation
+name: RobotTrust validation
 on: [push, pull_request]
 jobs:
   test:
@@ -19,3 +19,24 @@ jobs:
       - run: python -m robottrust.generator --episodes 100 --seed 42 --output evidence/episodes.jsonl
       - run: python -m robottrust.evaluator --input evidence/episodes.jsonl --output-dir evidence
       - run: python -c "from robottrust.evidence import verify_checksums; assert verify_checksums('evidence')"
+  streaming-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install ".[test]"
+      - run: docker compose config --quiet
+      - run: docker compose up -d --wait --wait-timeout 180
+      - run: python scripts/b3_transport_integration.py --ledger work/b3-ci.sqlite3 --output-dir work/b3-ci-evidence
+      - if: always()
+        run: mkdir -p work/b3-ci-evidence && docker compose logs --no-color > work/b3-ci-evidence/broker.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: b3-real-broker-evidence
+          path: work/b3-ci-evidence
+      - if: always()
+        run: docker compose down

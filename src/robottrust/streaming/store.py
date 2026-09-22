@@ -8,7 +8,7 @@ that the supplied position completes its processed prefix. No broker is used.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from enum import Enum
 import hashlib
@@ -196,13 +196,29 @@ class IngestionStore:
 
     def ingest(self, value: EventEnvelope | Mapping[str, Any] | bytes | str,
                position: TransportPosition | None = None, *, checkpoint_next_offset: int | None = None) -> IngestResult:
+        return self._ingest_prepared(_prepare(value), position, checkpoint_next_offset)
+
+    def reject(self, value: EventEnvelope | Mapping[str, Any] | bytes | str, reason: str,
+               position: TransportPosition | None = None, *, checkpoint_next_offset: int | None = None) -> IngestResult:
+        """Durably classify external validation failure without altering raw evidence.
+
+        This generic boundary is transport-independent. A rejected payload has
+        raw evidence/hash, not a canonical accepted payload hash. All transaction
+        and position-conflict rules are shared with ingest.
+        """
+        if not isinstance(reason, str) or not reason.strip():
+            raise ValueError("a nonblank rejection reason is required")
+        prepared = replace(_prepare(value), event=None, payload=None, payload_hash=None, rejection_reason=reason)
+        return self._ingest_prepared(prepared, position, checkpoint_next_offset)
+
+    def _ingest_prepared(self, prepared: _Prepared, position: TransportPosition | None,
+                         checkpoint_next_offset: int | None) -> IngestResult:
         if position is not None:
             position = TransportPosition.model_validate(position.model_dump())
         if checkpoint_next_offset is not None:
             if (position is None or type(checkpoint_next_offset) is not int
                     or checkpoint_next_offset != position.offset + 1):
                 raise ValueError("checkpoint requires a transport position and must equal offset + 1")
-        prepared = _prepare(value)
         db = self._db()
         db.execute("BEGIN IMMEDIATE")
         try:

@@ -31,3 +31,45 @@ class TransportPosition(BaseModel):
         if not value.strip():
             raise ValueError("topic must not be blank")
         return value
+
+
+class BrokerConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True, allow_inf_nan=False)
+    bootstrap_servers: str = Field(default="127.0.0.1:19092", min_length=1)
+    topic: str = Field(default="robottrust.episodes.v1", min_length=1)
+
+    @field_validator("bootstrap_servers", "topic")
+    @classmethod
+    def nonblank_setting(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("broker settings must not be blank")
+        return value
+
+
+class ProducerConfig(BrokerConfig):
+    delivery_timeout_ms: int = Field(default=10000, strict=True, ge=1000, le=120000)
+    flush_timeout_s: float = Field(default=15, gt=0, le=180)
+
+    def client_settings(self) -> dict[str, str | int | bool]:
+        return {"bootstrap.servers": self.bootstrap_servers, "client.id": "robottrust-producer",
+                "enable.idempotence": True, "acks": "all", "delivery.timeout.ms": self.delivery_timeout_ms,
+                "allow.auto.create.topics": False}
+
+
+class ConsumerConfig(BrokerConfig):
+    group_id: str = Field(min_length=1)
+    poll_timeout_s: float = Field(default=1, gt=0, le=10)
+    socket_timeout_ms: int = Field(default=10000, strict=True, ge=1000, le=60000)
+
+    @field_validator("group_id")
+    @classmethod
+    def nonblank_group(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("group_id must not be blank")
+        return value
+
+    def client_settings(self) -> dict[str, str | int | bool]:
+        return {"bootstrap.servers": self.bootstrap_servers, "group.id": self.group_id,
+                "enable.auto.commit": False, "enable.auto.offset.store": False,
+                "auto.offset.reset": "earliest", "allow.auto.create.topics": False,
+                "group.protocol": "classic", "socket.timeout.ms": self.socket_timeout_ms}
