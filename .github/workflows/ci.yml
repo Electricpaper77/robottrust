@@ -1,8 +1,11 @@
-name: B1 validation
+name: B1 and B2 validation
 on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RAY_USAGE_STATS_ENABLED: "0"
     strategy:
       matrix:
         python-version: ["3.11", "3.12", "3.13"]

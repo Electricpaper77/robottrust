@@ -1,0 +1,2028 @@
+{
+  "schema_version": 1,
+  "methodology": {
+    "duration": "median measured warm wall-clock seconds; includes partitioning, serialization, worker dispatch, validation and canonical reduction; excludes generation, Ray startup and warmup",
+    "startup": "Ray startup plus ready handshake with one distinct actor process per worker",
+    "latency": "worker canonical evaluator time per partition, milliseconds; not per-episode inference latency",
+    "speedup": "same-dataset median Ray 1-worker duration / median current duration",
+    "efficiency": "speedup / configured worker count",
+    "reduction": "B1 reevaluation of validated worker observations in input order plus partition verification; serial overhead is included",
+    "equivalence": "exact equality, no tolerance",
+    "retry_policy": "none; one attempt, fail closed",
+    "provenance": "commit identifies checkout at run; source_sha256 identifies exact Python source and pyproject bytes when dirty",
+    "samples": "all repetitions retained; successful_tasks/failed_tasks refer to worker tasks, not robot task success",
+    "scope": "single-machine local Ray actors; no multi-node claims"
+  },
+  "results": [
+    {
+      "timestamp": "2026-09-22T05:48:37.586428+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 1000,
+      "dataset_sha256": "2a6c560c6066a71e811693ceff0bec1a9358a2881957dc4ef78a2ba2e178a447",
+      "seed": 42,
+      "worker_count": 1,
+      "startup_duration_s": 16.099665599991567,
+      "serial_duration_s": 0.001783900079317391,
+      "baseline_duration_s": 0.04934909997973591,
+      "samples": [
+        {
+          "duration_s": 0.059619200066663325,
+          "partition_evaluation_durations_s": [
+            0.0005967000033706427
+          ],
+          "worker_pids": [
+            25080
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 1,
+          "failed_tasks": 0,
+          "attempt_count": 1,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.04934909997973591,
+          "partition_evaluation_durations_s": [
+            0.0007166999857872725
+          ],
+          "worker_pids": [
+            25080
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 1,
+          "failed_tasks": 0,
+          "attempt_count": 1,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.047406099969521165,
+          "partition_evaluation_durations_s": [
+            0.0009876000694930553
+          ],
+          "worker_pids": [
+            25080
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 1,
+          "failed_tasks": 0,
+          "attempt_count": 1,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 0.04934909997973591,
+      "episodes_per_second": 20263.79407954,
+      "speedup": 1.0,
+      "scaling_efficiency": 1.0,
+      "mean_partition_evaluation_latency_ms": 0.7670000195503235,
+      "p95_partition_evaluation_latency_ms": 0.9876000694930553
+    },
+    {
+      "timestamp": "2026-09-22T05:48:54.558034+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 1000,
+      "dataset_sha256": "2a6c560c6066a71e811693ceff0bec1a9358a2881957dc4ef78a2ba2e178a447",
+      "seed": 42,
+      "worker_count": 2,
+      "startup_duration_s": 6.782198100001551,
+      "serial_duration_s": 0.001783900079317391,
+      "baseline_duration_s": 0.04934909997973591,
+      "samples": [
+        {
+          "duration_s": 0.06421440001577139,
+          "partition_evaluation_durations_s": [
+            0.00037210003938525915,
+            0.00040110002737492323
+          ],
+          "worker_pids": [
+            8200,
+            11616
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 2,
+          "failed_tasks": 0,
+          "attempt_count": 2,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.04309290007222444,
+          "partition_evaluation_durations_s": [
+            0.000434999936260283,
+            0.0006145000224933028
+          ],
+          "worker_pids": [
+            8200,
+            11616
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 2,
+          "failed_tasks": 0,
+          "attempt_count": 2,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.04518040001858026,
+          "partition_evaluation_durations_s": [
+            0.0005979998968541622,
+            0.0003624999662861228
+          ],
+          "worker_pids": [
+            8200,
+            11616
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 2,
+          "failed_tasks": 0,
+          "attempt_count": 2,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 0.04518040001858026,
+      "episodes_per_second": 22133.491504917045,
+      "speedup": 1.0922678851767866,
+      "scaling_efficiency": 0.5461339425883933,
+      "mean_partition_evaluation_latency_ms": 0.46386664810900885,
+      "p95_partition_evaluation_latency_ms": 0.6145000224933028
+    },
+    {
+      "timestamp": "2026-09-22T05:49:01.855808+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 1000,
+      "dataset_sha256": "2a6c560c6066a71e811693ceff0bec1a9358a2881957dc4ef78a2ba2e178a447",
+      "seed": 42,
+      "worker_count": 4,
+      "startup_duration_s": 7.67468070005998,
+      "serial_duration_s": 0.001783900079317391,
+      "baseline_duration_s": 0.04934909997973591,
+      "samples": [
+        {
+          "duration_s": 0.0373692000284791,
+          "partition_evaluation_durations_s": [
+            0.00018620002083480358,
+            0.00022749998606741428,
+            0.00019299995619803667,
+            0.0001938999630510807
+          ],
+          "worker_pids": [
+            22524,
+            6352,
+            12756,
+            16968
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 4,
+          "failed_tasks": 0,
+          "attempt_count": 4,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.03692330000922084,
+          "partition_evaluation_durations_s": [
+            0.00031020003370940685,
+            0.00033270008862018585,
+            0.00023459992371499538,
+            0.0002492000348865986
+          ],
+          "worker_pids": [
+            22524,
+            6352,
+            12756,
+            16968
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 4,
+          "failed_tasks": 0,
+          "attempt_count": 4,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.041633800021372736,
+          "partition_evaluation_durations_s": [
+            0.0003208999987691641,
+            0.00030319998040795326,
+            0.0003170999698340893,
+            0.00032400002237409353
+          ],
+          "worker_pids": [
+            22524,
+            6352,
+            12756,
+            16968
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 4,
+          "failed_tasks": 0,
+          "attempt_count": 4,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 0.0373692000284791,
+      "episodes_per_second": 26760.005545687334,
+      "speedup": 1.3205821891324117,
+      "scaling_efficiency": 0.3301455472831029,
+      "mean_partition_evaluation_latency_ms": 0.2660416648723185,
+      "p95_partition_evaluation_latency_ms": 0.33270008862018585
+    },
+    {
+      "timestamp": "2026-09-22T05:49:10.300316+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 1000,
+      "dataset_sha256": "2a6c560c6066a71e811693ceff0bec1a9358a2881957dc4ef78a2ba2e178a447",
+      "seed": 42,
+      "worker_count": 8,
+      "startup_duration_s": 9.249912400031462,
+      "serial_duration_s": 0.001783900079317391,
+      "baseline_duration_s": 0.04934909997973591,
+      "samples": [
+        {
+          "duration_s": 0.038324100081808865,
+          "partition_evaluation_durations_s": [
+            0.00021620001643896103,
+            0.00020889996085315943,
+            0.00022139993961900473,
+            0.0003285999409854412,
+            0.0001922000665217638,
+            0.0002424000995233655,
+            0.0003173999721184373,
+            0.00022769998759031296
+          ],
+          "worker_pids": [
+            22872,
+            4588,
+            13136,
+            25992,
+            4484,
+            32152,
+            32708,
+            17648
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 8,
+          "failed_tasks": 0,
+          "attempt_count": 8,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.04198709991760552,
+          "partition_evaluation_durations_s": [
+            0.00019350007642060518,
+            0.00023150001652538776,
+            0.0005189999938011169,
+            0.00022440007887780666,
+            0.00023040000814944506,
+            0.00023010000586509705,
+            0.00023549993056803942,
+            0.00021349999587982893
+          ],
+          "worker_pids": [
+            22872,
+            4588,
+            13136,
+            25992,
+            4484,
+            32152,
+            32708,
+            17648
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 8,
+          "failed_tasks": 0,
+          "attempt_count": 8,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.03877159999683499,
+          "partition_evaluation_durations_s": [
+            0.0002114999806508422,
+            0.00022659997921437025,
+            0.00021850003395229578,
+            0.0006658999482169747,
+            0.00023420003708451986,
+            0.00023619993589818478,
+            0.00022489996626973152,
+            0.00030049995984882116
+          ],
+          "worker_pids": [
+            22872,
+            4588,
+            13136,
+            25992,
+            4484,
+            32152,
+            32708,
+            17648
+          ],
+          "integrity": {
+            "expected_episodes": 1000,
+            "processed_episodes": 1000,
+            "unique_episodes": 1000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 1000,
+              "task_success_rate": 0.948,
+              "collision_rate": 0.02,
+              "safety_violation_rate": 0.004,
+              "mean_inference_latency_ms": 234.272924,
+              "p95_inference_latency_ms": 428.517,
+              "mean_sensor_dropout_rate": 0.076805892,
+              "failed_episode_count": 52
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 8,
+          "failed_tasks": 0,
+          "attempt_count": 8,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 0.03877159999683499,
+      "episodes_per_second": 25792.074613418896,
+      "speedup": 1.2728156687824175,
+      "scaling_efficiency": 0.15910195859780218,
+      "mean_partition_evaluation_latency_ms": 0.2646249971197297,
+      "p95_partition_evaluation_latency_ms": 0.5189999938011169
+    },
+    {
+      "timestamp": "2026-09-22T05:49:21.247727+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 10000,
+      "dataset_sha256": "23bbd5c3f866abed45b7eb959fa1f37f445ae58c8df4eec60daf508e70702316",
+      "seed": 42,
+      "worker_count": 1,
+      "startup_duration_s": 7.601925099967048,
+      "serial_duration_s": 0.013405699981376529,
+      "baseline_duration_s": 0.4569449999835342,
+      "samples": [
+        {
+          "duration_s": 0.4569449999835342,
+          "partition_evaluation_durations_s": [
+            0.006148800021037459
+          ],
+          "worker_pids": [
+            9384
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 1,
+          "failed_tasks": 0,
+          "attempt_count": 1,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.5069252999965101,
+          "partition_evaluation_durations_s": [
+            0.008986800094135106
+          ],
+          "worker_pids": [
+            9384
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 1,
+          "failed_tasks": 0,
+          "attempt_count": 1,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.42263170005753636,
+          "partition_evaluation_durations_s": [
+            0.00723170000128448
+          ],
+          "worker_pids": [
+            9384
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 1,
+          "failed_tasks": 0,
+          "attempt_count": 1,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 0.4569449999835342,
+      "episodes_per_second": 21884.471873771123,
+      "speedup": 1.0,
+      "scaling_efficiency": 1.0,
+      "mean_partition_evaluation_latency_ms": 7.455766705485682,
+      "p95_partition_evaluation_latency_ms": 8.986800094135106
+    },
+    {
+      "timestamp": "2026-09-22T05:49:30.849367+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 10000,
+      "dataset_sha256": "23bbd5c3f866abed45b7eb959fa1f37f445ae58c8df4eec60daf508e70702316",
+      "seed": 42,
+      "worker_count": 2,
+      "startup_duration_s": 7.652788000064902,
+      "serial_duration_s": 0.013405699981376529,
+      "baseline_duration_s": 0.4569449999835342,
+      "samples": [
+        {
+          "duration_s": 0.39134040009230375,
+          "partition_evaluation_durations_s": [
+            0.0031809998909011483,
+            0.0030366999562829733
+          ],
+          "worker_pids": [
+            11232,
+            22456
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 2,
+          "failed_tasks": 0,
+          "attempt_count": 2,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.39863049995619804,
+          "partition_evaluation_durations_s": [
+            0.006191799999214709,
+            0.003142300061881542
+          ],
+          "worker_pids": [
+            11232,
+            22456
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 2,
+          "failed_tasks": 0,
+          "attempt_count": 2,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.39537869999185205,
+          "partition_evaluation_durations_s": [
+            0.002725499914959073,
+            0.0027172999689355493
+          ],
+          "worker_pids": [
+            11232,
+            22456
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 2,
+          "failed_tasks": 0,
+          "attempt_count": 2,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 0.39537869999185205,
+      "episodes_per_second": 25292.207193270857,
+      "speedup": 1.1557147615512695,
+      "scaling_efficiency": 0.5778573807756348,
+      "mean_partition_evaluation_latency_ms": 3.499099965362499,
+      "p95_partition_evaluation_latency_ms": 6.191799999214709
+    },
+    {
+      "timestamp": "2026-09-22T05:49:40.441594+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 10000,
+      "dataset_sha256": "23bbd5c3f866abed45b7eb959fa1f37f445ae58c8df4eec60daf508e70702316",
+      "seed": 42,
+      "worker_count": 4,
+      "startup_duration_s": 6.82180709997192,
+      "serial_duration_s": 0.013405699981376529,
+      "baseline_duration_s": 0.4569449999835342,
+      "samples": [
+        {
+          "duration_s": 0.36192330007907003,
+          "partition_evaluation_durations_s": [
+            0.00280780007597059,
+            0.001567099941894412,
+            0.0014916000654920936,
+            0.0016986000118777156
+          ],
+          "worker_pids": [
+            21112,
+            23996,
+            22336,
+            23392
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 4,
+          "failed_tasks": 0,
+          "attempt_count": 4,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.4125167999882251,
+          "partition_evaluation_durations_s": [
+            0.0014080998953431845,
+            0.0017541999695822597,
+            0.001320999930612743,
+            0.0012338000815361738
+          ],
+          "worker_pids": [
+            21112,
+            23996,
+            22336,
+            23392
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 4,
+          "failed_tasks": 0,
+          "attempt_count": 4,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.3695558999897912,
+          "partition_evaluation_durations_s": [
+            0.0026493000332266092,
+            0.0013189999153837562,
+            0.0020912999752908945,
+            0.002354600001126528
+          ],
+          "worker_pids": [
+            21112,
+            23996,
+            22336,
+            23392
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 4,
+          "failed_tasks": 0,
+          "attempt_count": 4,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 0.3695558999897912,
+      "episodes_per_second": 27059.505748051226,
+      "speedup": 1.2364705853597713,
+      "scaling_efficiency": 0.3091176463399428,
+      "mean_partition_evaluation_latency_ms": 1.80803332477808,
+      "p95_partition_evaluation_latency_ms": 2.80780007597059
+    },
+    {
+      "timestamp": "2026-09-22T05:49:49.024941+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 10000,
+      "dataset_sha256": "23bbd5c3f866abed45b7eb959fa1f37f445ae58c8df4eec60daf508e70702316",
+      "seed": 42,
+      "worker_count": 8,
+      "startup_duration_s": 8.570978000061586,
+      "serial_duration_s": 0.013405699981376529,
+      "baseline_duration_s": 0.4569449999835342,
+      "samples": [
+        {
+          "duration_s": 0.3785187000175938,
+          "partition_evaluation_durations_s": [
+            0.002572900033555925,
+            0.003860199940390885,
+            0.004393500043079257,
+            0.002354700001887977,
+            0.0023776000598445535,
+            0.002095900010317564,
+            0.0013109000865370035,
+            0.0017226000782102346
+          ],
+          "worker_pids": [
+            30212,
+            6584,
+            18140,
+            30648,
+            25496,
+            7900,
+            27676,
+            22288
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 8,
+          "failed_tasks": 0,
+          "attempt_count": 8,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.3513329999987036,
+          "partition_evaluation_durations_s": [
+            0.0012728000292554498,
+            0.0022511000279337168,
+            0.0012568999081850052,
+            0.0028267999878153205,
+            0.0015725999837741256,
+            0.0016092000296339393,
+            0.0013946000253781676,
+            0.0012493999674916267
+          ],
+          "worker_pids": [
+            30212,
+            6584,
+            18140,
+            30648,
+            25496,
+            7900,
+            27676,
+            22288
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 8,
+          "failed_tasks": 0,
+          "attempt_count": 8,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 0.34580600005574524,
+          "partition_evaluation_durations_s": [
+            0.001362500013783574,
+            0.0027191999834030867,
+            0.0013062000507488847,
+            0.002113400027155876,
+            0.00413959997240454,
+            0.0016226000152528286,
+            0.00397359998896718,
+            0.0012877000262960792
+          ],
+          "worker_pids": [
+            30212,
+            6584,
+            18140,
+            30648,
+            25496,
+            7900,
+            27676,
+            22288
+          ],
+          "integrity": {
+            "expected_episodes": 10000,
+            "processed_episodes": 10000,
+            "unique_episodes": 10000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 10000,
+              "task_success_rate": 0.9347,
+              "collision_rate": 0.0238,
+              "safety_violation_rate": 0.006,
+              "mean_inference_latency_ms": 235.46459840000003,
+              "p95_inference_latency_ms": 429.398,
+              "mean_sensor_dropout_rate": 0.0771523246,
+              "failed_episode_count": 653
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 8,
+          "failed_tasks": 0,
+          "attempt_count": 8,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 0.3513329999987036,
+      "episodes_per_second": 28463.025107339476,
+      "speedup": 1.300603700720457,
+      "scaling_efficiency": 0.16257546259005712,
+      "mean_partition_evaluation_latency_ms": 2.1936041788042835,
+      "p95_partition_evaluation_latency_ms": 4.13959997240454
+    },
+    {
+      "timestamp": "2026-09-22T05:50:03.229519+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 100000,
+      "dataset_sha256": "90fcbdf0e4be904dd5863542b95ee77e531977cb292489054f73d4e8fe934d09",
+      "seed": 42,
+      "worker_count": 1,
+      "startup_duration_s": 5.62307149998378,
+      "serial_duration_s": 0.15654229989740998,
+      "baseline_duration_s": 6.4258114999393,
+      "samples": [
+        {
+          "duration_s": 5.415479200077243,
+          "partition_evaluation_durations_s": [
+            0.14609979989472777
+          ],
+          "worker_pids": [
+            23608
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 1,
+          "failed_tasks": 0,
+          "attempt_count": 1,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 6.54145880008582,
+          "partition_evaluation_durations_s": [
+            0.14676569995936006
+          ],
+          "worker_pids": [
+            23608
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 1,
+          "failed_tasks": 0,
+          "attempt_count": 1,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 6.4258114999393,
+          "partition_evaluation_durations_s": [
+            0.13686119997873902
+          ],
+          "worker_pids": [
+            23608
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 1,
+          "failed_tasks": 0,
+          "attempt_count": 1,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 6.4258114999393,
+      "episodes_per_second": 15562.236769775245,
+      "speedup": 1.0,
+      "scaling_efficiency": 1.0,
+      "mean_partition_evaluation_latency_ms": 143.24223327760896,
+      "p95_partition_evaluation_latency_ms": 146.76569995936006
+    },
+    {
+      "timestamp": "2026-09-22T05:50:31.658581+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 100000,
+      "dataset_sha256": "90fcbdf0e4be904dd5863542b95ee77e531977cb292489054f73d4e8fe934d09",
+      "seed": 42,
+      "worker_count": 2,
+      "startup_duration_s": 5.938036000006832,
+      "serial_duration_s": 0.15654229989740998,
+      "baseline_duration_s": 6.4258114999393,
+      "samples": [
+        {
+          "duration_s": 5.007087699952535,
+          "partition_evaluation_durations_s": [
+            0.04038220003712922,
+            0.07390089996624738
+          ],
+          "worker_pids": [
+            25812,
+            6544
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 2,
+          "failed_tasks": 0,
+          "attempt_count": 2,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 4.921222799923271,
+          "partition_evaluation_durations_s": [
+            0.0732404999434948,
+            0.06900689995381981
+          ],
+          "worker_pids": [
+            25812,
+            6544
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 2,
+          "failed_tasks": 0,
+          "attempt_count": 2,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 4.888189299963415,
+          "partition_evaluation_durations_s": [
+            0.07074320001993328,
+            0.0784177000168711
+          ],
+          "worker_pids": [
+            25812,
+            6544
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 2,
+          "failed_tasks": 0,
+          "attempt_count": 2,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 4.921222799923271,
+      "episodes_per_second": 20320.152950920885,
+      "speedup": 1.3057347251255293,
+      "scaling_efficiency": 0.6528673625627647,
+      "mean_partition_evaluation_latency_ms": 67.61523332291593,
+      "p95_partition_evaluation_latency_ms": 78.4177000168711
+    },
+    {
+      "timestamp": "2026-09-22T05:50:53.455530+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 100000,
+      "dataset_sha256": "90fcbdf0e4be904dd5863542b95ee77e531977cb292489054f73d4e8fe934d09",
+      "seed": 42,
+      "worker_count": 4,
+      "startup_duration_s": 5.912182500003837,
+      "serial_duration_s": 0.15654229989740998,
+      "baseline_duration_s": 6.4258114999393,
+      "samples": [
+        {
+          "duration_s": 5.1713901000330225,
+          "partition_evaluation_durations_s": [
+            0.02696829999331385,
+            0.022436699946410954,
+            0.03854720003437251,
+            0.03208589996211231
+          ],
+          "worker_pids": [
+            30328,
+            26220,
+            28480,
+            14496
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 4,
+          "failed_tasks": 0,
+          "attempt_count": 4,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 3.7697983999969438,
+          "partition_evaluation_durations_s": [
+            0.03186089999508113,
+            0.04445960000157356,
+            0.03529190004337579,
+            0.04212039988487959
+          ],
+          "worker_pids": [
+            30328,
+            26220,
+            28480,
+            14496
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 4,
+          "failed_tasks": 0,
+          "attempt_count": 4,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 4.420621299999766,
+          "partition_evaluation_durations_s": [
+            0.030474200029857457,
+            0.04157999996095896,
+            0.0344141999958083,
+            0.044940700056031346
+          ],
+          "worker_pids": [
+            30328,
+            26220,
+            28480,
+            14496
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 4,
+          "failed_tasks": 0,
+          "attempt_count": 4,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 4.420621299999766,
+      "episodes_per_second": 22621.254618667583,
+      "speedup": 1.4535991807168915,
+      "scaling_efficiency": 0.3633997951792229,
+      "mean_partition_evaluation_latency_ms": 35.43166665864798,
+      "p95_partition_evaluation_latency_ms": 44.940700056031346
+    },
+    {
+      "timestamp": "2026-09-22T05:51:14.040829+00:00",
+      "commit_sha": "6cd821d0a3ac075a55989203cef9096be0231962",
+      "source_sha256": "e8c803bc15220182e644ff7c83ff441d2d431c3875695c7171babac8b5942afe",
+      "source_dirty": true,
+      "python_version": "3.12.14",
+      "ray_version": "2.54.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu_count": 8,
+      "episode_count": 100000,
+      "dataset_sha256": "90fcbdf0e4be904dd5863542b95ee77e531977cb292489054f73d4e8fe934d09",
+      "seed": 42,
+      "worker_count": 8,
+      "startup_duration_s": 7.071874000015669,
+      "serial_duration_s": 0.15654229989740998,
+      "baseline_duration_s": 6.4258114999393,
+      "samples": [
+        {
+          "duration_s": 5.611523099942133,
+          "partition_evaluation_durations_s": [
+            0.015269300085492432,
+            0.022263500024564564,
+            0.030440200003795326,
+            0.017474899999797344,
+            0.02411320002283901,
+            0.015563599998131394,
+            0.0146752999862656,
+            0.01599530002567917
+          ],
+          "worker_pids": [
+            10844,
+            19424,
+            28544,
+            2360,
+            19640,
+            25984,
+            32104,
+            22016
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 8,
+          "failed_tasks": 0,
+          "attempt_count": 8,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 3.8841385000851005,
+          "partition_evaluation_durations_s": [
+            0.014646900002844632,
+            0.016030600061640143,
+            0.018213900038972497,
+            0.024296100018545985,
+            0.01621929998509586,
+            0.01817319996189326,
+            0.017865900066681206,
+            0.014934799983166158
+          ],
+          "worker_pids": [
+            10844,
+            19424,
+            28544,
+            2360,
+            19640,
+            25984,
+            32104,
+            22016
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 8,
+          "failed_tasks": 0,
+          "attempt_count": 8,
+          "final_status": "success",
+          "failure_reason": null
+        },
+        {
+          "duration_s": 4.479565599933267,
+          "partition_evaluation_durations_s": [
+            0.013788599986582994,
+            0.01738039997871965,
+            0.020097399945370853,
+            0.02050109999254346,
+            0.0185910000000149,
+            0.02285079995635897,
+            0.015525700058788061,
+            0.02172030007932335
+          ],
+          "worker_pids": [
+            10844,
+            19424,
+            28544,
+            2360,
+            19640,
+            25984,
+            32104,
+            22016
+          ],
+          "integrity": {
+            "expected_episodes": 100000,
+            "processed_episodes": 100000,
+            "unique_episodes": 100000,
+            "duplicates": 0,
+            "missing": 0,
+            "unknown": 0
+          },
+          "evaluation": {
+            "metrics": {
+              "episode_count": 100000,
+              "task_success_rate": 0.9325,
+              "collision_rate": 0.02445,
+              "safety_violation_rate": 0.00516,
+              "mean_inference_latency_ms": 234.70021962,
+              "p95_inference_latency_ms": 428.943,
+              "mean_sensor_dropout_rate": 0.07688129913,
+              "failed_episode_count": 6750
+            },
+            "decision": "PASS",
+            "reasons": [],
+            "thresholds": {
+              "max_safety_violation_rate": 0.01,
+              "max_collision_rate": 0.05,
+              "min_task_success_rate": 0.9,
+              "max_p95_inference_latency_ms": 500.0
+            }
+          },
+          "successful_tasks": 8,
+          "failed_tasks": 0,
+          "attempt_count": 8,
+          "final_status": "success",
+          "failure_reason": null
+        }
+      ],
+      "duration_s": 4.479565599933267,
+      "episodes_per_second": 22323.59316302673,
+      "speedup": 1.434472016669435,
+      "scaling_efficiency": 0.17930900208367936,
+      "mean_partition_evaluation_latency_ms": 18.609637510962784,
+      "p95_partition_evaluation_latency_ms": 24.296100018545985
+    }
+  ]
+}
