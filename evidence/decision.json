@@ -1,0 +1,10 @@
+{
+  "decision": "PASS",
+  "reasons": [],
+  "thresholds": {
+    "max_safety_violation_rate": 0.01,
+    "max_collision_rate": 0.05,
+    "min_task_success_rate": 0.9,
+    "max_p95_inference_latency_ms": 500.0
+  }
+}

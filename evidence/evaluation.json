@@ -1,0 +1,20 @@
+{
+  "metrics": {
+    "episode_count": 100,
+    "task_success_rate": 0.92,
+    "collision_rate": 0.04,
+    "safety_violation_rate": 0.0,
+    "mean_inference_latency_ms": 232.7696,
+    "p95_inference_latency_ms": 427.667,
+    "mean_sensor_dropout_rate": 0.08566611,
+    "failed_episode_count": 8
+  },
+  "decision": "PASS",
+  "reasons": [],
+  "thresholds": {
+    "max_safety_violation_rate": 0.01,
+    "max_collision_rate": 0.05,
+    "min_task_success_rate": 0.9,
+    "max_p95_inference_latency_ms": 500.0
+  }
+}
