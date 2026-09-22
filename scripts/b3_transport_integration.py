@@ -85,10 +85,10 @@ def run(ledger: Path, output: Path, bootstrap: str) -> dict:
                           results=[dict(position=r.position.model_dump(), ingestion=asdict(r.ingestion),
                                         committed_next_offset=r.committed_next_offset) for r in results],
                           contract="at-least-once delivery plus idempotent durable ingestion")
-            (output / "accepted-events.jsonl").write_text("".join(canonical_payload_bytes(e).decode()+"\n" for e in accepted), encoding="utf-8")
-            (output / "report.json").write_text(json.dumps(report, indent=2)+"\n", encoding="utf-8")
+            (output / "accepted-events.jsonl").write_text("".join(canonical_payload_bytes(e).decode()+"\n" for e in accepted), encoding="utf-8", newline="\n")
+            (output / "report.json").write_text(json.dumps(report, indent=2)+"\n", encoding="utf-8", newline="\n")
             checksums = {name: hashlib.sha256((output/name).read_bytes()).hexdigest() for name in ["accepted-events.jsonl", "report.json"]}
-            (output / "checksums.json").write_text(json.dumps(checksums, indent=2)+"\n", encoding="utf-8")
+            (output / "checksums.json").write_text(json.dumps(checksums, indent=2)+"\n", encoding="utf-8", newline="\n")
             return report
     finally:
         client.close()
