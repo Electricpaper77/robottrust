@@ -143,7 +143,7 @@ def test_legacy_migration_preserves_but_does_not_invent_provenance(tmp_path,even
         original.ingest(event,TransportPosition(topic=TOPIC,partition=0,offset=4),checkpoint_next_offset=5)
     # Reproduce the exact v1 table set, retaining original acceptance/receipts.
     with sqlite3.connect(path) as db:
-        db.executescript("DROP TABLE live_partitions; DROP TABLE startup_actions; PRAGMA user_version=1;")
+        db.executescript("DROP TABLE replay_observations; DROP TABLE replay_partitions; DROP TABLE replay_sessions; DROP TABLE live_partitions; DROP TABLE startup_actions; PRAGMA user_version=1;")
     with IngestionStore(path) as store:
         assert store.live_checkpoint(TOPIC,0) is None
         worker,client=make_worker(store,k=5)

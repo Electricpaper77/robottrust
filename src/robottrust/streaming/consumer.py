@@ -7,12 +7,10 @@ import json
 import time
 from typing import Any, Callable
 
-from confluent_kafka import Consumer, KafkaError, TopicPartition, TopicCollection, OFFSET_INVALID
-from confluent_kafka.admin import AdminClient
+from confluent_kafka import Consumer, KafkaError, TopicPartition, OFFSET_INVALID
 
 from robottrust.streaming.config import ConsumerConfig, TransportPosition
-from robottrust.streaming.events import EventEnvelope, decode_event_json
-from robottrust.streaming.producer import source_key
+from robottrust.streaming.transport import broker_identity, ingest_transport
 from robottrust.streaming.store import IngestResult, IngestionStore
 from robottrust.streaming.reconciliation import ConsumerError, Action, Provenance, RecoveryDecision, RecoveryError, reconcile
 
@@ -44,14 +42,7 @@ class EpisodeConsumer:
                 raise
 
     def _broker_identity(self) -> tuple[str, str, int]:
-        admin = AdminClient({"bootstrap.servers": self.config.bootstrap_servers})
-        timeout = self.config.startup_timeout_s
-        cluster = admin.describe_cluster(request_timeout=timeout).result(timeout)
-        topic = admin.describe_topics(TopicCollection([self.config.topic]), request_timeout=timeout)[self.config.topic].result(timeout)
-        topic_id = str(topic.topic_id)
-        if not cluster.cluster_id or not topic_id or topic_id == "AAAAAAAAAAAAAAAAAAAAAA":
-            raise ValueError("broker does not expose a usable cluster/topic incarnation identity")
-        return cluster.cluster_id, topic_id, len(topic.partitions)
+        return broker_identity(self.config.bootstrap_servers, self.config.topic, self.config.startup_timeout_s)
 
     def _on_assign(self, client: Any, partitions: list[Any]) -> None:
         try:
@@ -200,21 +191,7 @@ class EpisodeConsumer:
             # Redelivery can be behind a durable checkpoint after a failed broker
             # commit. Do not rewind SQLite; still record the duplicate receipt.
             checkpoint = next_offset if position.offset == previous else None
-            value = message.value()
-            rejection = None
-            if value is None:
-                value, rejection = b"", "tombstone/null payload (no value bytes)"
-            else:
-                try:
-                    event = EventEnvelope.model_validate(decode_event_json(value))
-                except (ValueError, TypeError):
-                    event = None  # B3.1 records the precise durable rejection.
-                if event is not None and message.key() != source_key(event):
-                    rejection = "message key mismatch with stable run/source identity"
-            if rejection is not None:
-                result = self.store.reject(value, rejection, position, checkpoint_next_offset=checkpoint)
-            else:
-                result = self.store.ingest(value, position, checkpoint_next_offset=checkpoint)
+            result = ingest_transport(self.store, message.value(), message.key(), position, checkpoint=checkpoint)
             # The ledger call has committed before this synchronous Kafka commit.
             durable_next = self.store.live_checkpoint(position.topic, position.partition).next_offset
             broker_next = self._broker_offsets.get(position.partition)

@@ -11,6 +11,7 @@ from collections.abc import Mapping
 from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timezone
 from enum import Enum
+import base64
 import hashlib
 import json
 from pathlib import Path
@@ -18,6 +19,7 @@ import sqlite3
 from typing import Any
 
 from robottrust.streaming.config import LedgerConfig, SQLITE_MAX_INTEGER, TransportPosition
+from robottrust.streaming.replay_models import ReplayManifest
 from robottrust.streaming.reconciliation import LiveCheckpoint, Provenance, RecoveryDecision
 from robottrust.streaming.events import EventEnvelope, canonical_payload_bytes, decode_event_json
 
@@ -129,6 +131,45 @@ COMMIT;
 """
 
 
+_REPLAY_SCHEMA = """
+BEGIN IMMEDIATE;
+CREATE TABLE replay_sessions (
+    session_id TEXT PRIMARY KEY NOT NULL,
+    manifest_json TEXT NOT NULL,
+    status TEXT NOT NULL CHECK(status IN ('ACTIVE','COMPLETE','FAILED')),
+    failure_reason TEXT,
+    updated_at TEXT NOT NULL,
+    accepted_before INTEGER NOT NULL,
+    accepted_after INTEGER,
+    live_before_json TEXT NOT NULL,
+    live_after_json TEXT
+);
+CREATE TABLE replay_partitions (
+    session_id TEXT NOT NULL REFERENCES replay_sessions(session_id),
+    partition INTEGER NOT NULL,
+    start_offset INTEGER NOT NULL,
+    end_offset INTEGER NOT NULL CHECK(end_offset >= start_offset),
+    next_offset INTEGER NOT NULL CHECK(next_offset >= start_offset AND next_offset <= end_offset),
+    complete INTEGER NOT NULL CHECK(complete IN (0,1)),
+    completion_proof TEXT,
+    PRIMARY KEY(session_id, partition)
+);
+CREATE TABLE replay_observations (
+    session_id TEXT NOT NULL,
+    partition INTEGER NOT NULL,
+    offset INTEGER NOT NULL,
+    receipt_id INTEGER NOT NULL REFERENCES ingest_receipts(receipt_id),
+    message_key BLOB,
+    payload_is_null INTEGER NOT NULL CHECK(payload_is_null IN (0,1)),
+    PRIMARY KEY(session_id,partition,offset),
+    FOREIGN KEY(session_id,partition) REFERENCES replay_partitions(session_id,partition)
+);
+CREATE INDEX replay_receipts ON replay_observations(session_id,receipt_id);
+PRAGMA user_version=3;
+COMMIT;
+"""
+
+
 def _prepare(value: EventEnvelope | Mapping[str, Any] | bytes | str) -> _Prepared:
     if isinstance(value, EventEnvelope):
         raw = value.model_dump_json().encode("utf-8")
@@ -185,9 +226,10 @@ class IngestionStore:
             version = db.execute("PRAGMA user_version").fetchone()[0]
             tables = {row[0] for row in db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
             expected = {"accepted_events", "ingest_receipts", "transport_positions", "checkpoints"}
-            if (version not in (0, 1, 2) or (version == 0 and tables) or
+            if (version not in (0, 1, 2, 3) or (version == 0 and tables) or
                     (version == 1 and tables != expected) or
-                    (version == 2 and tables != expected | {"live_partitions", "startup_actions"})):
+                    (version == 2 and tables != expected | {"live_partitions", "startup_actions"}) or
+                    (version == 3 and tables != expected | {"live_partitions", "startup_actions", "replay_sessions", "replay_partitions", "replay_observations"})):
                 raise RuntimeError("unsupported or unrelated ledger schema")
             mode = db.execute("PRAGMA journal_mode=WAL").fetchone()[0]
             db.execute("PRAGMA synchronous=FULL")
@@ -199,6 +241,8 @@ class IngestionStore:
             if version in (0, 1):
                 # Preserve legacy rows exactly; never invent their starting boundary.
                 db.executescript(_PROVENANCE_SCHEMA)
+            if version in (0, 1, 2):
+                db.executescript(_REPLAY_SCHEMA)
         except BaseException:
             self.close()
             raise
@@ -410,3 +454,145 @@ class IngestionStore:
 
     def startup_actions(self) -> list[dict[str, Any]]:
         return [dict(row) for row in self._db().execute("SELECT * FROM startup_actions ORDER BY action_id")]
+
+
+    def accepted_count(self) -> int:
+        return self._db().execute("SELECT COUNT(*) FROM accepted_events").fetchone()[0]
+
+    def accepted_page(self, *, after_id: str = "", limit: int = 100) -> list[dict[str, str]]:
+        if type(limit) is not int or not 1 <= limit <= 1000:
+            raise ValueError("page limit must be between 1 and 1000")
+        return [dict(row) for row in self._db().execute(
+            "SELECT event_id,payload_hash FROM accepted_events WHERE event_id>? ORDER BY event_id LIMIT ?", (after_id,limit))]
+
+    def create_replay(self, manifest: ReplayManifest) -> None:
+        manifest = ReplayManifest.model_validate(manifest.model_dump())
+        db = self._db()
+        db.execute("BEGIN IMMEDIATE")
+        try:
+            for boundary in manifest.boundaries:
+                live = self.live_checkpoint(manifest.topic,boundary.partition)
+                if live is None:
+                    raise ValueError("replay requires existing live partition provenance; fresh-ledger reconstruction is not supported")
+                p = live.provenance
+                if (p.broker_id,p.topic_id,p.partition_count) != (manifest.broker_id,manifest.topic_id,manifest.partition_count):
+                    raise ValueError("replay manifest differs from existing ledger provenance")
+            snapshot = {str(b.partition):asdict(self.live_checkpoint(manifest.topic,b.partition)) for b in manifest.boundaries}
+            db.execute("INSERT INTO replay_sessions VALUES (?,?,'ACTIVE',NULL,?,?,NULL,?,NULL)",
+                       (manifest.session_id,manifest.model_dump_json(),manifest.created_at,self.accepted_count(),json.dumps(snapshot,sort_keys=True)))
+            for b in manifest.boundaries:
+                db.execute("INSERT INTO replay_partitions VALUES (?,?,?,?,?,?,?)",
+                           (manifest.session_id,b.partition,b.start_offset,b.end_offset,b.start_offset,
+                            int(b.start_offset==b.end_offset),"EMPTY_INTERVAL" if b.start_offset==b.end_offset else None))
+            db.execute("COMMIT")
+        except BaseException:
+            db.execute("ROLLBACK")
+            raise
+
+    def replay_state(self, session_id: str) -> dict[str, Any]:
+        row = self._db().execute("SELECT * FROM replay_sessions WHERE session_id=?",(session_id,)).fetchone()
+        if row is None:
+            raise ValueError("unknown replay session")
+        result = dict(row)
+        result["manifest"] = json.loads(result.pop("manifest_json"))
+        result["live_before"] = json.loads(result.pop("live_before_json"))
+        after = result.pop("live_after_json")
+        result["live_after"] = json.loads(after) if after is not None else None
+        result["partitions"] = [dict(r) for r in self._db().execute(
+            "SELECT * FROM replay_partitions WHERE session_id=? ORDER BY partition",(session_id,))]
+        return result
+
+    def _active_replay_partition(self, session_id: str, partition: int) -> sqlite3.Row:
+        row = self._db().execute("""SELECT p.*,s.status,s.manifest_json FROM replay_partitions p
+            JOIN replay_sessions s USING(session_id) WHERE p.session_id=? AND p.partition=?""",(session_id,partition)).fetchone()
+        if row is None or row["status"] != "ACTIVE":
+            raise ValueError("replay session/partition is not active")
+        return row
+
+    def ingest_replay(self, session_id: str, value: bytes, key: bytes | None, payload_is_null: bool,
+                      position: TransportPosition, rejection: str | None = None) -> IngestResult:
+        """Receipt, observation and replay progress share a transaction; no live writes."""
+        prepared = _prepare(value)
+        if rejection is not None:
+            prepared = replace(prepared,event=None,payload=None,payload_hash=None,rejection_reason=rejection)
+        db = self._db()
+        db.execute("BEGIN IMMEDIATE")
+        try:
+            progress = self._active_replay_partition(session_id,position.partition)
+            manifest = ReplayManifest.model_validate_json(progress["manifest_json"])
+            if (position.topic != manifest.topic or progress["complete"] or
+                    not progress["next_offset"] <= position.offset < progress["end_offset"]):
+                raise ValueError("replay observation outside unfinished frozen interval")
+            result = self._persist(prepared,position,None)
+            db.execute("INSERT INTO replay_observations VALUES (?,?,?,?,?,?)",
+                       (session_id,position.partition,position.offset,result.receipt_id,key,int(payload_is_null)))
+            next_offset = position.offset + 1
+            db.execute("UPDATE replay_partitions SET next_offset=?,complete=?,completion_proof=? WHERE session_id=? AND partition=?",
+                       (next_offset,int(next_offset==progress["end_offset"]),
+                        "DURABLE_RECORD" if next_offset==progress["end_offset"] else None,session_id,position.partition))
+            db.execute("COMMIT")
+            return result
+        except BaseException:
+            db.execute("ROLLBACK")
+            raise
+
+    def complete_replay_partition(self, session_id: str, partition: int, traversed_offset: int, proof: str) -> None:
+        if proof not in ("PARTITION_EOF","BOUNDARY_RECORD"):
+            raise ValueError("explicit broker traversal proof is required")
+        db = self._db()
+        db.execute("BEGIN IMMEDIATE")
+        try:
+            progress = self._active_replay_partition(session_id,partition)
+            if traversed_offset < progress["end_offset"]:
+                raise ValueError("broker has not traversed frozen end")
+            db.execute("UPDATE replay_partitions SET next_offset=end_offset,complete=1,completion_proof=? WHERE session_id=? AND partition=?",
+                       (proof,session_id,partition))
+            db.execute("COMMIT")
+        except BaseException:
+            db.execute("ROLLBACK")
+            raise
+
+    def finish_replay(self, session_id: str, failure_reason: str | None = None) -> None:
+        db = self._db()
+        db.execute("BEGIN IMMEDIATE")
+        try:
+            state = self.replay_state(session_id)
+            if state["status"] != "ACTIVE":
+                raise ValueError("replay is already terminal")
+            if failure_reason is None and not all(p["complete"] for p in state["partitions"]):
+                raise ValueError("not all replay partitions completed")
+            manifest = state["manifest"]
+            snapshot = {str(b["partition"]):asdict(self.live_checkpoint(manifest["topic"],b["partition"])) for b in manifest["boundaries"]}
+            if snapshot != state["live_before"] and failure_reason is None:
+                failure_reason = "FAIL_LIVE_STATE_CHANGED: live ingestion must not run concurrently against the replay ledger"
+            db.execute("UPDATE replay_sessions SET status=?,failure_reason=?,updated_at=?,accepted_after=?,live_after_json=? WHERE session_id=?",
+                       ("FAILED" if failure_reason else "COMPLETE",failure_reason,
+                        datetime.now(timezone.utc).isoformat(timespec="microseconds"),self.accepted_count(),json.dumps(snapshot,sort_keys=True),session_id))
+            db.execute("COMMIT")
+        except BaseException:
+            db.execute("ROLLBACK")
+            raise
+
+    def replay_counts(self, session_id: str) -> dict[str, int]:
+        counts = {d.value:0 for d in Disposition}
+        counts.update({row[0]:row[1] for row in self._db().execute("""SELECT r.disposition,COUNT(*)
+            FROM replay_observations o JOIN ingest_receipts r USING(receipt_id)
+            WHERE o.session_id=? GROUP BY r.disposition""",(session_id,))})
+        return counts
+
+    def replay_page(self, session_id: str, *, after_receipt: int = 0, limit: int = 100) -> list[dict[str, Any]]:
+        if type(limit) is not int or not 1 <= limit <= 1000 or type(after_receipt) is not int or after_receipt < 0:
+            raise ValueError("valid cursor and page limit 1..1000 required")
+        rows = self._db().execute("""SELECT r.receipt_id,r.topic,r.partition,r.offset,r.event_id,r.payload_hash,
+            r.disposition,r.rejection_reason,r.raw_sha256,r.raw_payload,o.message_key,o.payload_is_null
+            FROM replay_observations o JOIN ingest_receipts r USING(receipt_id)
+            WHERE o.session_id=? AND r.receipt_id>? ORDER BY r.receipt_id LIMIT ?""",(session_id,after_receipt,limit))
+        result = []
+        for row in rows:
+            item = dict(row)
+            item["payload_base64"] = base64.b64encode(item.pop("raw_payload")).decode("ascii")
+            key = item.pop("message_key")
+            item["key_base64"] = base64.b64encode(key).decode("ascii") if key is not None else None
+            item["payload_is_null"] = bool(item["payload_is_null"])
+            result.append(item)
+        return result

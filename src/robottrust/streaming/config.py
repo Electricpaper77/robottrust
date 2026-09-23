@@ -77,3 +77,17 @@ class ConsumerConfig(BrokerConfig):
                 "enable.auto.commit": False, "enable.auto.offset.store": False,
                 "auto.offset.reset": "error", "allow.auto.create.topics": False,
                 "group.protocol": "classic", "socket.timeout.ms": self.socket_timeout_ms}
+
+
+class ReplayConfig(BrokerConfig):
+    expected_partitions: int = Field(default=3, strict=True, ge=1, le=128)
+    timeout_s: float = Field(default=60, gt=0, le=600)
+    request_timeout_s: float = Field(default=5, gt=0, le=30)
+    poll_timeout_s: float = Field(default=0.25, gt=0, le=5)
+
+    def client_settings(self, session_id: str) -> dict[str, str | int | bool]:
+        return {"bootstrap.servers": self.bootstrap_servers, "group.id": "robottrust-replay-" + session_id,
+                "enable.auto.commit": False, "enable.auto.offset.store": False,
+                "auto.offset.reset": "error", "enable.partition.eof": True,
+                "allow.auto.create.topics": False, "isolation.level": "read_uncommitted",
+                "socket.timeout.ms": int(self.request_timeout_s * 1000)}

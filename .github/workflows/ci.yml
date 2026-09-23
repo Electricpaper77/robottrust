@@ -32,6 +32,7 @@ jobs:
       - run: docker compose up -d --wait --wait-timeout 180
       - run: python scripts/b3_transport_integration.py --ledger work/b3-ci.sqlite3 --output-dir work/b3-ci-evidence
       - run: python scripts/b3_reconciliation_integration.py --ledger work/b3-reconciliation.sqlite3 --output-dir work/b3-ci-evidence/reconciliation
+      - run: python scripts/b3_replay_integration.py --ledger work/b3-replay.sqlite3 --output-dir work/b3-ci-evidence/replay
       - if: always()
         run: mkdir -p work/b3-ci-evidence && docker compose logs --no-color > work/b3-ci-evidence/broker.log
       - uses: actions/upload-artifact@v4

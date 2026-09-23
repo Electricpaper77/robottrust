@@ -122,3 +122,7 @@ Pinned Redpanda and confluent-kafka connect acknowledged publishing to the B3.1 
 ## B3.3.1 startup recovery
 
 Live checkpoints now record provenance and starting boundaries. Consumers reconcile durable and broker offsets, seek explicitly, and repair a lagging broker commit after verification. See [startup reconciliation](docs/b3-startup-reconciliation.md) for bootstrap policy, legacy ledger handling, and limits.
+
+## B3.3.2 finite replay
+
+Replay retained history into an existing ledger using persisted frozen offset vectors, independent replay progress and no live Kafka commits. Identical already-ingested history adds zero accepted events. See [finite replay guarantees and commands](docs/b3-finite-replay.md). Reconstruction and backpressure remain outside this milestone.
