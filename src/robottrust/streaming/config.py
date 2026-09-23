@@ -1,5 +1,6 @@
 """Local ledger settings and future transport coordinates; no broker client."""
 from pathlib import Path
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -58,6 +59,9 @@ class ProducerConfig(BrokerConfig):
 
 class ConsumerConfig(BrokerConfig):
     group_id: str = Field(min_length=1)
+    bootstrap_policy: Literal["earliest", "latest", "explicit"] | None = None
+    expected_partitions: int = Field(default=3, strict=True, ge=1)
+    startup_timeout_s: float = Field(default=30, gt=0, le=120)
     poll_timeout_s: float = Field(default=1, gt=0, le=10)
     socket_timeout_ms: int = Field(default=10000, strict=True, ge=1000, le=60000)
 
@@ -71,5 +75,5 @@ class ConsumerConfig(BrokerConfig):
     def client_settings(self) -> dict[str, str | int | bool]:
         return {"bootstrap.servers": self.bootstrap_servers, "group.id": self.group_id,
                 "enable.auto.commit": False, "enable.auto.offset.store": False,
-                "auto.offset.reset": "earliest", "allow.auto.create.topics": False,
+                "auto.offset.reset": "error", "allow.auto.create.topics": False,
                 "group.protocol": "classic", "socket.timeout.ms": self.socket_timeout_ms}

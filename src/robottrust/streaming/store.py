@@ -8,7 +8,7 @@ that the supplied position completes its processed prefix. No broker is used.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass, replace
+from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timezone
 from enum import Enum
 import hashlib
@@ -18,6 +18,7 @@ import sqlite3
 from typing import Any
 
 from robottrust.streaming.config import LedgerConfig, SQLITE_MAX_INTEGER, TransportPosition
+from robottrust.streaming.reconciliation import LiveCheckpoint, Provenance, RecoveryDecision
 from robottrust.streaming.events import EventEnvelope, canonical_payload_bytes, decode_event_json
 
 
@@ -102,6 +103,32 @@ COMMIT;
 """
 
 
+_PROVENANCE_SCHEMA = """
+BEGIN IMMEDIATE;
+CREATE TABLE live_partitions (
+    topic TEXT NOT NULL,
+    partition INTEGER NOT NULL CHECK(partition >= 0),
+    broker_id TEXT NOT NULL,
+    topic_id TEXT NOT NULL,
+    partition_count INTEGER NOT NULL CHECK(partition_count > partition),
+    mode TEXT NOT NULL CHECK(mode = 'LIVE'),
+    start_offset INTEGER NOT NULL CHECK(start_offset >= 0),
+    next_offset INTEGER NOT NULL CHECK(next_offset >= start_offset),
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    PRIMARY KEY(topic, partition)
+);
+CREATE TABLE startup_actions (
+    action_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    recorded_at TEXT NOT NULL,
+    result_json TEXT NOT NULL,
+    status TEXT NOT NULL
+);
+PRAGMA user_version=2;
+COMMIT;
+"""
+
+
 def _prepare(value: EventEnvelope | Mapping[str, Any] | bytes | str) -> _Prepared:
     if isinstance(value, EventEnvelope):
         raw = value.model_dump_json().encode("utf-8")
@@ -158,7 +185,9 @@ class IngestionStore:
             version = db.execute("PRAGMA user_version").fetchone()[0]
             tables = {row[0] for row in db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
             expected = {"accepted_events", "ingest_receipts", "transport_positions", "checkpoints"}
-            if version not in (0, 1) or (version == 0 and tables) or (version == 1 and tables != expected):
+            if (version not in (0, 1, 2) or (version == 0 and tables) or
+                    (version == 1 and tables != expected) or
+                    (version == 2 and tables != expected | {"live_partitions", "startup_actions"})):
                 raise RuntimeError("unsupported or unrelated ledger schema")
             mode = db.execute("PRAGMA journal_mode=WAL").fetchone()[0]
             db.execute("PRAGMA synchronous=FULL")
@@ -167,6 +196,9 @@ class IngestionStore:
                 raise RuntimeError("required SQLite durability settings are unavailable")
             if version == 0:
                 db.executescript(_SCHEMA)
+            if version in (0, 1):
+                # Preserve legacy rows exactly; never invent their starting boundary.
+                db.executescript(_PROVENANCE_SCHEMA)
         except BaseException:
             self.close()
             raise
@@ -226,7 +258,21 @@ class IngestionStore:
                 previous = self.latest_checkpoint(position.topic, position.partition)
                 if previous is not None and checkpoint_next_offset < previous:
                     raise ValueError("checkpoint cannot move backwards")
+            live = self.live_checkpoint(position.topic, position.partition) if position else None
+            if live is not None:
+                if position.offset < live.start_offset:
+                    raise ValueError("message precedes declared live starting boundary")
+                if position.offset < live.next_offset:
+                    if self.lookup_position(position) is None:
+                        raise ValueError("old delivery has no durable position in covered interval")
+                    if checkpoint_next_offset is not None:
+                        raise ValueError("old delivery must not rewrite live progress")
+                elif position.offset != live.next_offset or checkpoint_next_offset != position.offset + 1:
+                    raise ValueError("live checkpoint would skip unfinished durable work")
             result = self._persist(prepared, position, checkpoint_next_offset)
+            if live is not None and checkpoint_next_offset is not None:
+                db.execute("UPDATE live_partitions SET next_offset=?, updated_at=? WHERE topic=? AND partition=?",
+                           (checkpoint_next_offset, result.ingested_at, position.topic, position.partition))
             db.execute("COMMIT")
             return result
         except BaseException:
@@ -309,3 +355,58 @@ class IngestionStore:
             FROM transport_positions p JOIN ingest_receipts r ON r.receipt_id=p.receipt_id
             WHERE p.topic=? AND p.partition=? AND p.offset=?""", (position.topic, position.partition, position.offset)).fetchone()
         return IngestResult(row[0], Disposition(row[1]), *row[2:]) if row else None
+
+
+    def live_checkpoint(self, topic: str, partition: int) -> LiveCheckpoint | None:
+        row = self._db().execute("SELECT * FROM live_partitions WHERE topic=? AND partition=?", (topic, partition)).fetchone()
+        if row is None:
+            return None
+        return LiveCheckpoint(Provenance(row["topic"], row["partition"], row["broker_id"], row["topic_id"], row["partition_count"]),
+                              row["start_offset"], row["next_offset"], row["mode"], row["created_at"], row["updated_at"])
+
+    def can_bootstrap(self, topic: str, partition: int) -> bool:
+        db = self._db()
+        return (self.live_checkpoint(topic, partition) is None and
+                self.latest_checkpoint(topic, partition) is None and
+                db.execute("SELECT 1 FROM transport_positions WHERE topic=? AND partition=? LIMIT 1", (topic, partition)).fetchone() is None)
+
+    def initialize_live(self, provenance: Provenance, start: int) -> LiveCheckpoint:
+        if (type(start) is not int or not 0 <= start < SQLITE_MAX_INTEGER or not provenance.broker_id or
+                not provenance.topic_id or not provenance.topic or not 0 <= provenance.partition < provenance.partition_count):
+            raise ValueError("invalid live provenance or starting boundary")
+        db = self._db()
+        db.execute("BEGIN IMMEDIATE")
+        try:
+            if not self.can_bootstrap(provenance.topic, provenance.partition):
+                raise ValueError("legacy or existing checkpoint cannot be bootstrapped without verified provenance")
+            timestamp = datetime.now(timezone.utc).isoformat(timespec="microseconds")
+            db.execute("INSERT INTO live_partitions VALUES (?,?,?,?,?,'LIVE',?,?,?,?)",
+                       (provenance.topic, provenance.partition, provenance.broker_id, provenance.topic_id,
+                        provenance.partition_count, start, start, timestamp, timestamp))
+            db.execute("COMMIT")
+        except BaseException:
+            db.execute("ROLLBACK")
+            raise
+        return self.live_checkpoint(provenance.topic, provenance.partition)
+
+    def verify_live_coverage(self, checkpoint: LiveCheckpoint) -> bool:
+        """B3.3.1 conservatively requires contiguous recorded offsets.
+
+        Topics with logical offset gaps fail closed; gap-aware traversal is not
+        inferred from max(offset). Legacy checkpoints are never promoted.
+        """
+        p = checkpoint.provenance
+        start, end = checkpoint.start_offset, checkpoint.next_offset
+        if not 0 <= start <= end or checkpoint.mode != "LIVE":
+            return False
+        count = self._db().execute("SELECT COUNT(*) FROM transport_positions WHERE topic=? AND partition=? AND offset>=? AND offset<?",
+                                   (p.topic, p.partition, start, end)).fetchone()[0]
+        old = self.latest_checkpoint(p.topic, p.partition)
+        return count == end - start and (old == end if end > start else old is None)
+
+    def record_startup(self, decision: RecoveryDecision, status: str) -> None:
+        self._db().execute("INSERT INTO startup_actions(recorded_at,result_json,status) VALUES (?,?,?)",
+                           (datetime.now(timezone.utc).isoformat(timespec="microseconds"), json.dumps(asdict(decision), sort_keys=True), status))
+
+    def startup_actions(self) -> list[dict[str, Any]]:
+        return [dict(row) for row in self._db().execute("SELECT * FROM startup_actions ORDER BY action_id")]

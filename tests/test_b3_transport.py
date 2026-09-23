@@ -1,7 +1,7 @@
 """Transport boundary unit tests; real broker coverage lives in scripts/."""
 from unittest.mock import Mock
 import pytest
-from confluent_kafka import TopicPartition
+from confluent_kafka import TopicPartition, OFFSET_INVALID
 from robottrust.generator import generate_episodes
 from robottrust.streaming.config import ProducerConfig, ConsumerConfig
 from robottrust.streaming.events import create_event, canonical_payload_bytes
@@ -31,7 +31,12 @@ def message(event, value="default", key="default", offset=0):
 def consumer(store):
     client = Mock()
     client.commit.side_effect = lambda *, offsets, asynchronous: offsets
-    return EpisodeConsumer(ConsumerConfig(group_id="unit"), store, client=client), client
+    client.committed.return_value = [TopicPartition("robottrust.episodes.v1", 0, OFFSET_INVALID)]
+    client.get_watermark_offsets.return_value = (0, 1000)
+    worker = EpisodeConsumer(ConsumerConfig(group_id="unit", bootstrap_policy="earliest"), store,
+                             client=client, subscribe=False, metadata_provider=lambda: ("cluster-unit", "topic-unit", 3))
+    worker.reconcile_assignment([TopicPartition("robottrust.episodes.v1", 0)])
+    return worker, client
 
 def test_producer_configuration():
     settings = ProducerConfig().client_settings()

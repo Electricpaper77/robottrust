@@ -31,7 +31,7 @@ The checked-in `evidence/b3_2` report and accepted-envelope JSONL come from the 
 
 ```powershell
 .\.venv\Scripts\python.exe -m robottrust.streaming.producer --run-id demo-1 --episodes 10 --seed 42
-.\.venv\Scripts\python.exe -m robottrust.streaming.consumer --group-id demo-consumer --ledger work/demo.sqlite3 --messages 10 --timeout 60
+.\.venv\Scripts\python.exe -m robottrust.streaming.consumer --group-id demo-consumer --ledger work/demo.sqlite3 --messages 10 --timeout 60 --bootstrap-policy earliest
 ```
 
-Create the topic first using the integration script or `docker compose exec redpanda rpk topic create robottrust.episodes.v1 --partitions 3 --replicas 1`. A fresh consumer group starts at earliest retained offsets. CLI consumers must have exclusive ownership of their local ledger's topic/partition checkpoint namespace; sharing one ledger across independent groups is outside this milestone.
+Create the topic first using the integration script or `docker compose exec redpanda rpk topic create robottrust.episodes.v1 --partitions 3 --replicas 1`. B3.3.1 now requires an explicit bootstrap policy for a fresh stream; see [startup reconciliation](b3-startup-reconciliation.md). CLI consumers must have exclusive ownership of their local ledger's topic/partition checkpoint namespace; sharing one ledger across independent groups is outside this milestone.

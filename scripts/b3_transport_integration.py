@@ -32,7 +32,7 @@ def run(ledger: Path, output: Path, bootstrap: str) -> dict:
     assert len(metadata.partitions) == 3
     assert all(len(part.replicas) == 1 for part in metadata.partitions.values())
     run_id = "b3.2-" + uuid.uuid4().hex
-    config = ConsumerConfig(bootstrap_servers=bootstrap, group_id=run_id)
+    config = ConsumerConfig(bootstrap_servers=bootstrap, group_id=run_id, bootstrap_policy="explicit")
     client = Consumer(config.client_settings())
     try:
         # Isolate this test window without deleting existing topic history.
@@ -62,6 +62,7 @@ def run(ledger: Path, output: Path, bootstrap: str) -> dict:
             deliveries.append(dict(topic=msg.topic(), partition=msg.partition(), offset=msg.offset(), event_id=None))
         with IngestionStore(ledger) as store:
             worker = EpisodeConsumer(config, store, client=client, subscribe=False)
+            worker.reconcile_assignment(starts, explicit_starts={p.partition: p.offset for p in starts})
             results = worker.consume(len(deliveries), timeout_s=90)
             accepted = store.accepted_events(run_id)
             expected = {event.event_id for event in events}

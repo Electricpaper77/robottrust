@@ -1,0 +1,239 @@
+{
+  "run_id": "b3.3.1-4c3fc08d788c43dca019baa0baa255aa",
+  "seed": 42,
+  "events_published": 6,
+  "expected_ids": [
+    "rt-event-v1:21d4233a79cdd767028ec75372b77b092dbd3f3f7ad3f60902d914c86d5e6be5",
+    "rt-event-v1:5aa7d790f01cb4a2a69d38ec6ba2e7592701d1fe624defbd036af66b9038284b",
+    "rt-event-v1:62b7c56aab38dd1a0fcbffd5a8e92b9ddb3a5d625a8e8637018a5daa29ed7337",
+    "rt-event-v1:bbc1788d089b1b5b4ee14d57d2ff800c4ac7660579b3f5b76620008db787f86a",
+    "rt-event-v1:c4a6735e3c9844fec7231bda5dedafffccfbecedcc3239d9c1af8f6fb9014e12",
+    "rt-event-v1:de6be6427d051fc1e770bd7a782e2d1a07c097e6898a4ec3712483d670b0cbda"
+  ],
+  "deliveries": [
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 2,
+      "offset": 22,
+      "event_id": "rt-event-v1:de6be6427d051fc1e770bd7a782e2d1a07c097e6898a4ec3712483d670b0cbda"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 2,
+      "offset": 23,
+      "event_id": "rt-event-v1:bbc1788d089b1b5b4ee14d57d2ff800c4ac7660579b3f5b76620008db787f86a"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 2,
+      "offset": 24,
+      "event_id": "rt-event-v1:c4a6735e3c9844fec7231bda5dedafffccfbecedcc3239d9c1af8f6fb9014e12"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 2,
+      "offset": 25,
+      "event_id": "rt-event-v1:5aa7d790f01cb4a2a69d38ec6ba2e7592701d1fe624defbd036af66b9038284b"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 2,
+      "offset": 26,
+      "event_id": "rt-event-v1:21d4233a79cdd767028ec75372b77b092dbd3f3f7ad3f60902d914c86d5e6be5"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 2,
+      "offset": 27,
+      "event_id": "rt-event-v1:62b7c56aab38dd1a0fcbffd5a8e92b9ddb3a5d625a8e8637018a5daa29ed7337"
+    }
+  ],
+  "scenarios": {
+    "K_gt_D": {
+      "D": 25,
+      "K": 28,
+      "decision": "RESUME_AT_D",
+      "earliest": 0,
+      "end": 28,
+      "partition": 2,
+      "reason": "resume from verified durable progress, never from an ahead broker commit",
+      "seek_offset": 25,
+      "topic": "robottrust.episodes.v1",
+      "repair_action": "NONE",
+      "accepted_delta": 3,
+      "duplicate_delta": 0,
+      "missing_ids": [],
+      "unexpected_ids": []
+    },
+    "D_gt_K": {
+      "D": 28,
+      "K": 25,
+      "decision": "RESUME_AT_D_AND_REPAIR_BROKER_COMMIT",
+      "earliest": 0,
+      "end": 28,
+      "partition": 2,
+      "reason": "verified durable interval leads broker commit",
+      "seek_offset": 28,
+      "topic": "robottrust.episodes.v1",
+      "repair_action": "VERIFIED_COMMIT_TO_D",
+      "accepted_delta": 0,
+      "duplicate_delta": 0,
+      "missing_ids": [],
+      "unexpected_ids": []
+    }
+  },
+  "checkpoints": [
+    {
+      "provenance": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+        "topic_id": "AAAAAEl6TAUAAAAAeOwcCA",
+        "partition_count": 3
+      },
+      "start_offset": 28,
+      "next_offset": 28,
+      "mode": "LIVE",
+      "created_at": "2026-09-23T04:03:48.125813+00:00",
+      "updated_at": "2026-09-23T04:03:48.125813+00:00"
+    },
+    {
+      "provenance": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 1,
+        "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+        "topic_id": "AAAAAEl6TAUAAAAAeOwcCA",
+        "partition_count": 3
+      },
+      "start_offset": 22,
+      "next_offset": 22,
+      "mode": "LIVE",
+      "created_at": "2026-09-23T04:03:48.134400+00:00",
+      "updated_at": "2026-09-23T04:03:48.134400+00:00"
+    },
+    {
+      "provenance": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 2,
+        "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+        "topic_id": "AAAAAEl6TAUAAAAAeOwcCA",
+        "partition_count": 3
+      },
+      "start_offset": 22,
+      "next_offset": 28,
+      "mode": "LIVE",
+      "created_at": "2026-09-23T04:03:48.147417+00:00",
+      "updated_at": "2026-09-23T04:03:49.267589+00:00"
+    }
+  ],
+  "startup_actions": [
+    {
+      "action_id": 1,
+      "recorded_at": "2026-09-23T04:03:48.123354+00:00",
+      "result_json": "{\"D\": null, \"K\": null, \"decision\": \"BOOTSTRAP_FROM_EXPLICIT_START_POLICY\", \"earliest\": 0, \"end\": 28, \"partition\": 0, \"reason\": \"new stream explicitly starts at the selected boundary\", \"seek_offset\": 28, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "PLANNED"
+    },
+    {
+      "action_id": 2,
+      "recorded_at": "2026-09-23T04:03:48.133151+00:00",
+      "result_json": "{\"D\": null, \"K\": null, \"decision\": \"BOOTSTRAP_FROM_EXPLICIT_START_POLICY\", \"earliest\": 0, \"end\": 22, \"partition\": 1, \"reason\": \"new stream explicitly starts at the selected boundary\", \"seek_offset\": 22, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "PLANNED"
+    },
+    {
+      "action_id": 3,
+      "recorded_at": "2026-09-23T04:03:48.144165+00:00",
+      "result_json": "{\"D\": null, \"K\": null, \"decision\": \"BOOTSTRAP_FROM_EXPLICIT_START_POLICY\", \"earliest\": 0, \"end\": 28, \"partition\": 2, \"reason\": \"new stream explicitly starts at the selected boundary\", \"seek_offset\": 22, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "PLANNED"
+    },
+    {
+      "action_id": 4,
+      "recorded_at": "2026-09-23T04:03:48.150834+00:00",
+      "result_json": "{\"D\": null, \"K\": null, \"decision\": \"BOOTSTRAP_FROM_EXPLICIT_START_POLICY\", \"earliest\": 0, \"end\": 28, \"partition\": 0, \"reason\": \"new stream explicitly starts at the selected boundary\", \"seek_offset\": 28, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "READY"
+    },
+    {
+      "action_id": 5,
+      "recorded_at": "2026-09-23T04:03:48.155589+00:00",
+      "result_json": "{\"D\": null, \"K\": null, \"decision\": \"BOOTSTRAP_FROM_EXPLICIT_START_POLICY\", \"earliest\": 0, \"end\": 22, \"partition\": 1, \"reason\": \"new stream explicitly starts at the selected boundary\", \"seek_offset\": 22, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "READY"
+    },
+    {
+      "action_id": 6,
+      "recorded_at": "2026-09-23T04:03:48.155589+00:00",
+      "result_json": "{\"D\": null, \"K\": null, \"decision\": \"BOOTSTRAP_FROM_EXPLICIT_START_POLICY\", \"earliest\": 0, \"end\": 28, \"partition\": 2, \"reason\": \"new stream explicitly starts at the selected boundary\", \"seek_offset\": 22, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "READY"
+    },
+    {
+      "action_id": 7,
+      "recorded_at": "2026-09-23T04:03:48.769991+00:00",
+      "result_json": "{\"D\": 28, \"K\": null, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 28, \"partition\": 0, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 28, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "PLANNED"
+    },
+    {
+      "action_id": 8,
+      "recorded_at": "2026-09-23T04:03:48.776639+00:00",
+      "result_json": "{\"D\": 22, \"K\": null, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 22, \"partition\": 1, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 22, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "PLANNED"
+    },
+    {
+      "action_id": 9,
+      "recorded_at": "2026-09-23T04:03:48.781926+00:00",
+      "result_json": "{\"D\": 25, \"K\": 28, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 28, \"partition\": 2, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 25, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "PLANNED"
+    },
+    {
+      "action_id": 10,
+      "recorded_at": "2026-09-23T04:03:48.785346+00:00",
+      "result_json": "{\"D\": 28, \"K\": null, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 28, \"partition\": 0, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 28, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "READY"
+    },
+    {
+      "action_id": 11,
+      "recorded_at": "2026-09-23T04:03:48.788429+00:00",
+      "result_json": "{\"D\": 22, \"K\": null, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 22, \"partition\": 1, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 22, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "READY"
+    },
+    {
+      "action_id": 12,
+      "recorded_at": "2026-09-23T04:03:48.790014+00:00",
+      "result_json": "{\"D\": 25, \"K\": 28, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 28, \"partition\": 2, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 25, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "READY"
+    },
+    {
+      "action_id": 13,
+      "recorded_at": "2026-09-23T04:03:49.399198+00:00",
+      "result_json": "{\"D\": 28, \"K\": null, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 28, \"partition\": 0, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 28, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "PLANNED"
+    },
+    {
+      "action_id": 14,
+      "recorded_at": "2026-09-23T04:03:49.405904+00:00",
+      "result_json": "{\"D\": 22, \"K\": null, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 22, \"partition\": 1, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 22, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "PLANNED"
+    },
+    {
+      "action_id": 15,
+      "recorded_at": "2026-09-23T04:03:49.412892+00:00",
+      "result_json": "{\"D\": 28, \"K\": 25, \"decision\": \"RESUME_AT_D_AND_REPAIR_BROKER_COMMIT\", \"earliest\": 0, \"end\": 28, \"partition\": 2, \"reason\": \"verified durable interval leads broker commit\", \"seek_offset\": 28, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "PLANNED"
+    },
+    {
+      "action_id": 16,
+      "recorded_at": "2026-09-23T04:03:49.416229+00:00",
+      "result_json": "{\"D\": 28, \"K\": null, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 28, \"partition\": 0, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 28, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "READY"
+    },
+    {
+      "action_id": 17,
+      "recorded_at": "2026-09-23T04:03:49.419215+00:00",
+      "result_json": "{\"D\": 22, \"K\": null, \"decision\": \"RESUME_AT_D\", \"earliest\": 0, \"end\": 22, \"partition\": 1, \"reason\": \"resume from verified durable progress, never from an ahead broker commit\", \"seek_offset\": 22, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "READY"
+    },
+    {
+      "action_id": 18,
+      "recorded_at": "2026-09-23T04:03:49.424418+00:00",
+      "result_json": "{\"D\": 28, \"K\": 25, \"decision\": \"RESUME_AT_D_AND_REPAIR_BROKER_COMMIT\", \"earliest\": 0, \"end\": 28, \"partition\": 2, \"reason\": \"verified durable interval leads broker commit\", \"seek_offset\": 28, \"topic\": \"robottrust.episodes.v1\"}",
+      "status": "REPAIRED"
+    }
+  ]
+}

@@ -118,3 +118,7 @@ The measurements show modest gains over one Ray worker, not linear scaling. Eigh
 ## B3.2 local streaming transport
 
 Pinned Redpanda and confluent-kafka connect acknowledged publishing to the B3.1 durable ledger with manual offset commits. The contract is at-least-once delivery plus idempotent durable ingestion. See [transport setup, guarantees and validation](docs/b3-transport.md). B3.3 replay/reconstruction is not implemented.
+
+## B3.3.1 startup recovery
+
+Live checkpoints now record provenance and starting boundaries. Consumers reconcile durable and broker offsets, seek explicitly, and repair a lagging broker commit after verification. See [startup reconciliation](docs/b3-startup-reconciliation.md) for bootstrap policy, legacy ledger handling, and limits.
