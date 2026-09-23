@@ -1,0 +1,463 @@
+{
+  "run_id": "b3.2-0805e7f6c1c94b6baf852ec0c0fc04c7",
+  "seed": 42,
+  "client_version": "2.15.1",
+  "topic": "robottrust.episodes.v1",
+  "partitions": 3,
+  "replication_factor": 1,
+  "published": 20,
+  "counts": {
+    "ACCEPTED": 12,
+    "DUPLICATE": 1,
+    "CONFLICT": 1,
+    "REJECTED": 6
+  },
+  "missing": 0,
+  "unexpected": 0,
+  "transport_positions": 20,
+  "deliveries": [
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 6,
+      "event_id": "rt-event-v1:6587d8761eda276dd41d28f47bdce4f554b1b412df39b5cfc33461efbf6f9adc"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 1,
+      "offset": 8,
+      "event_id": "rt-event-v1:51c9778706f06fadf9324d8d02a63f9695b8f3a0bec0e87f367c9de8c8bd7e47"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 7,
+      "event_id": "rt-event-v1:f536df3969e3aae81d1fb34cc628150a8e22c8bb3c7bcf012e1d2748f50d4393"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 8,
+      "event_id": "rt-event-v1:43e020f09494e886953ecc97dd01cadbdb48c02de29b126e297e2d8917ec5103"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 1,
+      "offset": 9,
+      "event_id": "rt-event-v1:bc6365ded53e8a33742a45ac3c5ce1e73cb6e4d2dc2f7eff4d16b75dbb6b3555"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 9,
+      "event_id": "rt-event-v1:cb9ca356125a452b02e33be33b05ba79592f60688d3552ce4d81b2db7f778cfa"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 10,
+      "event_id": "rt-event-v1:53af7c0a7ccb6da310a58fc188caf10aa8afeb0d01704cdaac4a9a86e69e9064"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 1,
+      "offset": 10,
+      "event_id": "rt-event-v1:fb8b48d5386ec3dc939b238585d1106ac6a11b61dc65bb0d142d55779b45db2a"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 11,
+      "event_id": "rt-event-v1:d5653068907b5e5dfe41d87ebe5fb2fc3adcc9dff0a18c52e62deb2980859947"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 12,
+      "event_id": "rt-event-v1:ec5edcfa598d18627ae15836cff0ae8f3f79ee82d8bdbcc676c7c18d3a6524f8"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 1,
+      "offset": 11,
+      "event_id": "rt-event-v1:833b2f2eae775c27f055a79e0df4cd5a364c514e84fe62cc608ffa66332d76a0"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 13,
+      "event_id": "rt-event-v1:86cc74a0f880101752dc321450efb92b117ac03fc39f67b6e7e3f87ebe6a4e88"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 14,
+      "event_id": "rt-event-v1:6587d8761eda276dd41d28f47bdce4f554b1b412df39b5cfc33461efbf6f9adc"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 15,
+      "event_id": "rt-event-v1:6587d8761eda276dd41d28f47bdce4f554b1b412df39b5cfc33461efbf6f9adc"
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 16,
+      "event_id": null
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 1,
+      "offset": 12,
+      "event_id": null
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 2,
+      "offset": 6,
+      "event_id": null
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 0,
+      "offset": 17,
+      "event_id": null
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 1,
+      "offset": 13,
+      "event_id": null
+    },
+    {
+      "topic": "robottrust.episodes.v1",
+      "partition": 2,
+      "offset": 7,
+      "event_id": null
+    }
+  ],
+  "results": [
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 6
+      },
+      "ingestion": {
+        "receipt_id": 1,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:6587d8761eda276dd41d28f47bdce4f554b1b412df39b5cfc33461efbf6f9adc",
+        "payload_hash": "309a10fdad06ae9fadda14ae0ead2e20106cec41846319fd0f03fbaeae07fcc3",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.349474+00:00"
+      },
+      "committed_next_offset": 7
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 1,
+        "offset": 8
+      },
+      "ingestion": {
+        "receipt_id": 2,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:51c9778706f06fadf9324d8d02a63f9695b8f3a0bec0e87f367c9de8c8bd7e47",
+        "payload_hash": "d2002c0ee784d70eea57af73a4a37cbc5b49392e518d554d8cf87b86d9fcd1a5",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.370896+00:00"
+      },
+      "committed_next_offset": 9
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 7
+      },
+      "ingestion": {
+        "receipt_id": 3,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:f536df3969e3aae81d1fb34cc628150a8e22c8bb3c7bcf012e1d2748f50d4393",
+        "payload_hash": "6e6ae5ddcfed49b680d3f463481305cd86f231ec6a9cbcce7fa5ae3826ae9431",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.388214+00:00"
+      },
+      "committed_next_offset": 8
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 8
+      },
+      "ingestion": {
+        "receipt_id": 4,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:43e020f09494e886953ecc97dd01cadbdb48c02de29b126e297e2d8917ec5103",
+        "payload_hash": "f66258b30b39206873fcb985e827660c35423f958bb00c2683a405678f6c7bd7",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.405075+00:00"
+      },
+      "committed_next_offset": 9
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 1,
+        "offset": 9
+      },
+      "ingestion": {
+        "receipt_id": 5,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:bc6365ded53e8a33742a45ac3c5ce1e73cb6e4d2dc2f7eff4d16b75dbb6b3555",
+        "payload_hash": "a67f5c1eac254c7d41eb60c0f021b316ee80863a28f13a8895b0974784a24b40",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.414192+00:00"
+      },
+      "committed_next_offset": 10
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 9
+      },
+      "ingestion": {
+        "receipt_id": 6,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:cb9ca356125a452b02e33be33b05ba79592f60688d3552ce4d81b2db7f778cfa",
+        "payload_hash": "a710ac8f5966ce8a4d87e3f708f8f9bc9ad4a9f2046e568df9fa04de1b72586e",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.434889+00:00"
+      },
+      "committed_next_offset": 10
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 10
+      },
+      "ingestion": {
+        "receipt_id": 7,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:53af7c0a7ccb6da310a58fc188caf10aa8afeb0d01704cdaac4a9a86e69e9064",
+        "payload_hash": "ff2cfc433db50341a6db4e61baba8c01f696d77b3b82a083f56720475521bc7b",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.460923+00:00"
+      },
+      "committed_next_offset": 11
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 1,
+        "offset": 10
+      },
+      "ingestion": {
+        "receipt_id": 8,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:fb8b48d5386ec3dc939b238585d1106ac6a11b61dc65bb0d142d55779b45db2a",
+        "payload_hash": "2b89cc86993812ee1eb5b6897557a475f8e9d8dd505aaebdbe56d06eb1b76fde",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.489161+00:00"
+      },
+      "committed_next_offset": 11
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 11
+      },
+      "ingestion": {
+        "receipt_id": 9,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:d5653068907b5e5dfe41d87ebe5fb2fc3adcc9dff0a18c52e62deb2980859947",
+        "payload_hash": "758782c357bdd94d892e7f5caf40407f45633c1fe528d511fcdfd5b5d5840290",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.508658+00:00"
+      },
+      "committed_next_offset": 12
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 12
+      },
+      "ingestion": {
+        "receipt_id": 10,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:ec5edcfa598d18627ae15836cff0ae8f3f79ee82d8bdbcc676c7c18d3a6524f8",
+        "payload_hash": "b08f3b733e2900ea897b34750ff838710e41371080c73ee003185c662b2f7fa8",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.523965+00:00"
+      },
+      "committed_next_offset": 13
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 1,
+        "offset": 11
+      },
+      "ingestion": {
+        "receipt_id": 11,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:833b2f2eae775c27f055a79e0df4cd5a364c514e84fe62cc608ffa66332d76a0",
+        "payload_hash": "c305d0fbf791c3fee7b91feabaf3e2cd4f39258b2d2fb2638abf8a80600c866a",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.541269+00:00"
+      },
+      "committed_next_offset": 12
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 13
+      },
+      "ingestion": {
+        "receipt_id": 12,
+        "disposition": "ACCEPTED",
+        "event_id": "rt-event-v1:86cc74a0f880101752dc321450efb92b117ac03fc39f67b6e7e3f87ebe6a4e88",
+        "payload_hash": "97f35dd25d59235802ea9ea14328c5c4c5f4bb0a6e3d28f06522909bc50c1a97",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.549981+00:00"
+      },
+      "committed_next_offset": 14
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 14
+      },
+      "ingestion": {
+        "receipt_id": 13,
+        "disposition": "DUPLICATE",
+        "event_id": "rt-event-v1:6587d8761eda276dd41d28f47bdce4f554b1b412df39b5cfc33461efbf6f9adc",
+        "payload_hash": "309a10fdad06ae9fadda14ae0ead2e20106cec41846319fd0f03fbaeae07fcc3",
+        "rejection_reason": null,
+        "ingested_at": "2026-09-22T23:51:17.565758+00:00"
+      },
+      "committed_next_offset": 15
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 15
+      },
+      "ingestion": {
+        "receipt_id": 14,
+        "disposition": "CONFLICT",
+        "event_id": "rt-event-v1:6587d8761eda276dd41d28f47bdce4f554b1b412df39b5cfc33461efbf6f9adc",
+        "payload_hash": "dc8710faad83cc9c8bf7e4d5b42ba49ab0f474e68a9024bae3f9106d57fdde76",
+        "rejection_reason": "event identity has a different accepted payload",
+        "ingested_at": "2026-09-22T23:51:17.574638+00:00"
+      },
+      "committed_next_offset": 16
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 16
+      },
+      "ingestion": {
+        "receipt_id": 15,
+        "disposition": "REJECTED",
+        "event_id": null,
+        "payload_hash": null,
+        "rejection_reason": "invalid event: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte",
+        "ingested_at": "2026-09-22T23:51:17.597769+00:00"
+      },
+      "committed_next_offset": 17
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 1,
+        "offset": 12
+      },
+      "ingestion": {
+        "receipt_id": 16,
+        "disposition": "REJECTED",
+        "event_id": null,
+        "payload_hash": null,
+        "rejection_reason": "invalid event: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+        "ingested_at": "2026-09-22T23:51:17.617083+00:00"
+      },
+      "committed_next_offset": 13
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 2,
+        "offset": 6
+      },
+      "ingestion": {
+        "receipt_id": 17,
+        "disposition": "REJECTED",
+        "event_id": "rt-event-v1:6587d8761eda276dd41d28f47bdce4f554b1b412df39b5cfc33461efbf6f9adc",
+        "payload_hash": null,
+        "rejection_reason": "invalid event: 1 validation error for EventEnvelope\nschema_version\n  Input should be 1 [type=literal_error, input_value=2, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error",
+        "ingested_at": "2026-09-22T23:51:17.624684+00:00"
+      },
+      "committed_next_offset": 7
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 0,
+        "offset": 17
+      },
+      "ingestion": {
+        "receipt_id": 18,
+        "disposition": "REJECTED",
+        "event_id": "rt-event-v1:6587d8761eda276dd41d28f47bdce4f554b1b412df39b5cfc33461efbf6f9adc",
+        "payload_hash": null,
+        "rejection_reason": "invalid event: 1 validation error for EventEnvelope\nepisode.collision_count\n  Input should be greater than or equal to 0 [type=greater_than_equal, input_value=-1, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/greater_than_equal",
+        "ingested_at": "2026-09-22T23:51:17.642135+00:00"
+      },
+      "committed_next_offset": 18
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 1,
+        "offset": 13
+      },
+      "ingestion": {
+        "receipt_id": 19,
+        "disposition": "REJECTED",
+        "event_id": null,
+        "payload_hash": null,
+        "rejection_reason": "tombstone/null payload (no value bytes)",
+        "ingested_at": "2026-09-22T23:51:17.656060+00:00"
+      },
+      "committed_next_offset": 14
+    },
+    {
+      "position": {
+        "topic": "robottrust.episodes.v1",
+        "partition": 2,
+        "offset": 7
+      },
+      "ingestion": {
+        "receipt_id": 20,
+        "disposition": "REJECTED",
+        "event_id": "rt-event-v1:6587d8761eda276dd41d28f47bdce4f554b1b412df39b5cfc33461efbf6f9adc",
+        "payload_hash": null,
+        "rejection_reason": "message key mismatch with stable run/source identity",
+        "ingested_at": "2026-09-22T23:51:17.668352+00:00"
+      },
+      "committed_next_offset": 8
+    }
+  ],
+  "contract": "at-least-once delivery plus idempotent durable ingestion"
+}

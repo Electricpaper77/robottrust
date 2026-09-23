@@ -1,0 +1,265 @@
+{
+  "session_id": "c9b75f1fa7044cff9d9a235f40180d52",
+  "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+  "seed": 42,
+  "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+  "topic_id": "/////91mS+v/////0b8KtA",
+  "partitions": [
+    0,
+    1,
+    2
+  ],
+  "start_vector": {
+    "0": 0,
+    "1": 0,
+    "2": 0
+  },
+  "end_vector": {
+    "0": 6,
+    "1": 6,
+    "2": 5
+  },
+  "completion_vector": {
+    "0": 6,
+    "1": 6,
+    "2": 5
+  },
+  "accepted_before": 12,
+  "accepted_after": 12,
+  "accepted_delta": 0,
+  "counts": {
+    "ACCEPTED": 0,
+    "DUPLICATE": 13,
+    "CONFLICT": 1,
+    "REJECTED": 3
+  },
+  "accepted_ids_before": [
+    {
+      "event_id": "rt-event-v1:0d74cbbcf8926ddd01b1608e60599d0e43a260224112a60069fb5005951d91d2",
+      "payload_hash": "1bc11c2632af33ef7a26fd53a503c72f445d494cc900d0c2136dd9595661becc"
+    },
+    {
+      "event_id": "rt-event-v1:3b282cb34a6ec761cd987a6dbaadc9f6870bb01410ea624a90b5fbc873fd78df",
+      "payload_hash": "7b5a49b785c32753c1ba1f6ed944f7fc2074cf0e36debd2e4a9f33da881a5778"
+    },
+    {
+      "event_id": "rt-event-v1:48878644eb2a3d8c4e127fa082db144a305ccfc1541bfd2c4ca225f3059eb5e1",
+      "payload_hash": "6ff59dd4a2f933c73dc95a3051489f86b7a729f9c6072bcf8e1dd6c8664576ee"
+    },
+    {
+      "event_id": "rt-event-v1:4a1c5effd2b3c6957ef09a7e00845746894b32cbaea4cf714b54da6b2d173a13",
+      "payload_hash": "c2a6e4c93bad8e5a4cb1a815e750b3eb943ec55849e39f73fbb5e790088a4053"
+    },
+    {
+      "event_id": "rt-event-v1:4a673c076e7cb2f2f4b7e0d060ab7495c4236b008f85b0520a97bc8486c4c3fc",
+      "payload_hash": "ab79e0bbd3544a3a546effc1c0be6e9cc5a00cda7f3078fd36e9b5e7bb3d0fc3"
+    },
+    {
+      "event_id": "rt-event-v1:8968be194729c66b72cc8bf43c22abd50508ab091f579c8752ffd04e7f58c475",
+      "payload_hash": "be313110abf58c062be40186e9b162ed8e68c6a8bd57b578772623c3b5ad3e32"
+    },
+    {
+      "event_id": "rt-event-v1:99986e586d5c6206ad8eccb3503c80d49714512120fa08a93602987702587e18",
+      "payload_hash": "e18a40b912924df3329ddb3d171cb227c7e02a4e14042d479cc9ac3edd9b7758"
+    },
+    {
+      "event_id": "rt-event-v1:aad563b53635ac9e4e00ec06a9adc215e8611915f919c222a996aedd5548ce2a",
+      "payload_hash": "7092c9a2512881fb562ed05215a102b6a5a2149e35aac132c15a6b084c9c4f5f"
+    },
+    {
+      "event_id": "rt-event-v1:ad57eeff7058adcc9faf538479884b7c760b3218426ee1009edd4f2f8b158833",
+      "payload_hash": "ff4eda39e15830ab1f1d805829a7394ff369fee7a3c6d82ca549ba23d5f49aca"
+    },
+    {
+      "event_id": "rt-event-v1:b182464f0bab9b53aa6037647f98fb35125f015740b5f87d8a681c241dcccf11",
+      "payload_hash": "8172cddca2eb8c4d55c68e178e24df785651748f5fc252812f7230c5f5a905bd"
+    },
+    {
+      "event_id": "rt-event-v1:dd7b610d948bd7eca9adeab1e0a390e172f8e3c9319a6058821f860282de70ed",
+      "payload_hash": "506e39fec6746404d6655207242f3852c64ffd3a92931b1bc9ad788e308d2718"
+    },
+    {
+      "event_id": "rt-event-v1:f91be776895eaf991d6fc8b69885578888e3b9d33f40b59fd98a109d404b1497",
+      "payload_hash": "63db7e2dfe6cc77a2347e7ac439c23e1b65e07413ade6c17639c4a6550e0c847"
+    }
+  ],
+  "accepted_ids_after": [
+    {
+      "event_id": "rt-event-v1:0d74cbbcf8926ddd01b1608e60599d0e43a260224112a60069fb5005951d91d2",
+      "payload_hash": "1bc11c2632af33ef7a26fd53a503c72f445d494cc900d0c2136dd9595661becc"
+    },
+    {
+      "event_id": "rt-event-v1:3b282cb34a6ec761cd987a6dbaadc9f6870bb01410ea624a90b5fbc873fd78df",
+      "payload_hash": "7b5a49b785c32753c1ba1f6ed944f7fc2074cf0e36debd2e4a9f33da881a5778"
+    },
+    {
+      "event_id": "rt-event-v1:48878644eb2a3d8c4e127fa082db144a305ccfc1541bfd2c4ca225f3059eb5e1",
+      "payload_hash": "6ff59dd4a2f933c73dc95a3051489f86b7a729f9c6072bcf8e1dd6c8664576ee"
+    },
+    {
+      "event_id": "rt-event-v1:4a1c5effd2b3c6957ef09a7e00845746894b32cbaea4cf714b54da6b2d173a13",
+      "payload_hash": "c2a6e4c93bad8e5a4cb1a815e750b3eb943ec55849e39f73fbb5e790088a4053"
+    },
+    {
+      "event_id": "rt-event-v1:4a673c076e7cb2f2f4b7e0d060ab7495c4236b008f85b0520a97bc8486c4c3fc",
+      "payload_hash": "ab79e0bbd3544a3a546effc1c0be6e9cc5a00cda7f3078fd36e9b5e7bb3d0fc3"
+    },
+    {
+      "event_id": "rt-event-v1:8968be194729c66b72cc8bf43c22abd50508ab091f579c8752ffd04e7f58c475",
+      "payload_hash": "be313110abf58c062be40186e9b162ed8e68c6a8bd57b578772623c3b5ad3e32"
+    },
+    {
+      "event_id": "rt-event-v1:99986e586d5c6206ad8eccb3503c80d49714512120fa08a93602987702587e18",
+      "payload_hash": "e18a40b912924df3329ddb3d171cb227c7e02a4e14042d479cc9ac3edd9b7758"
+    },
+    {
+      "event_id": "rt-event-v1:aad563b53635ac9e4e00ec06a9adc215e8611915f919c222a996aedd5548ce2a",
+      "payload_hash": "7092c9a2512881fb562ed05215a102b6a5a2149e35aac132c15a6b084c9c4f5f"
+    },
+    {
+      "event_id": "rt-event-v1:ad57eeff7058adcc9faf538479884b7c760b3218426ee1009edd4f2f8b158833",
+      "payload_hash": "ff4eda39e15830ab1f1d805829a7394ff369fee7a3c6d82ca549ba23d5f49aca"
+    },
+    {
+      "event_id": "rt-event-v1:b182464f0bab9b53aa6037647f98fb35125f015740b5f87d8a681c241dcccf11",
+      "payload_hash": "8172cddca2eb8c4d55c68e178e24df785651748f5fc252812f7230c5f5a905bd"
+    },
+    {
+      "event_id": "rt-event-v1:dd7b610d948bd7eca9adeab1e0a390e172f8e3c9319a6058821f860282de70ed",
+      "payload_hash": "506e39fec6746404d6655207242f3852c64ffd3a92931b1bc9ad788e308d2718"
+    },
+    {
+      "event_id": "rt-event-v1:f91be776895eaf991d6fc8b69885578888e3b9d33f40b59fd98a109d404b1497",
+      "payload_hash": "63db7e2dfe6cc77a2347e7ac439c23e1b65e07413ade6c17639c4a6550e0c847"
+    }
+  ],
+  "missing_ids": [],
+  "unexpected_ids": [],
+  "post_boundary_excluded": 3,
+  "post_boundary_deliveries": [
+    {
+      "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+      "partition": 0,
+      "offset": 6
+    },
+    {
+      "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+      "partition": 1,
+      "offset": 6
+    },
+    {
+      "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+      "partition": 2,
+      "offset": 5
+    }
+  ],
+  "observations": 17,
+  "live_checkpoints_before": {
+    "0": {
+      "provenance": {
+        "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+        "partition": 0,
+        "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+        "topic_id": "/////91mS+v/////0b8KtA",
+        "partition_count": 3
+      },
+      "start_offset": 0,
+      "next_offset": 6,
+      "mode": "LIVE",
+      "created_at": "2026-09-23T05:48:32.122552+00:00",
+      "updated_at": "2026-09-23T05:48:32.201190+00:00"
+    },
+    "1": {
+      "provenance": {
+        "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+        "partition": 1,
+        "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+        "topic_id": "/////91mS+v/////0b8KtA",
+        "partition_count": 3
+      },
+      "start_offset": 0,
+      "next_offset": 6,
+      "mode": "LIVE",
+      "created_at": "2026-09-23T05:48:32.136440+00:00",
+      "updated_at": "2026-09-23T05:48:32.243083+00:00"
+    },
+    "2": {
+      "provenance": {
+        "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+        "partition": 2,
+        "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+        "topic_id": "/////91mS+v/////0b8KtA",
+        "partition_count": 3
+      },
+      "start_offset": 0,
+      "next_offset": 5,
+      "mode": "LIVE",
+      "created_at": "2026-09-23T05:48:32.147466+00:00",
+      "updated_at": "2026-09-23T05:48:32.275856+00:00"
+    }
+  },
+  "live_checkpoints_after": {
+    "0": {
+      "provenance": {
+        "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+        "partition": 0,
+        "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+        "topic_id": "/////91mS+v/////0b8KtA",
+        "partition_count": 3
+      },
+      "start_offset": 0,
+      "next_offset": 6,
+      "mode": "LIVE",
+      "created_at": "2026-09-23T05:48:32.122552+00:00",
+      "updated_at": "2026-09-23T05:48:32.201190+00:00"
+    },
+    "1": {
+      "provenance": {
+        "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+        "partition": 1,
+        "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+        "topic_id": "/////91mS+v/////0b8KtA",
+        "partition_count": 3
+      },
+      "start_offset": 0,
+      "next_offset": 6,
+      "mode": "LIVE",
+      "created_at": "2026-09-23T05:48:32.136440+00:00",
+      "updated_at": "2026-09-23T05:48:32.243083+00:00"
+    },
+    "2": {
+      "provenance": {
+        "topic": "robottrust.replay.b3_3_2.895d9fb3e546429ea3751461cb69e644",
+        "partition": 2,
+        "broker_id": "redpanda.d0a64cbc-faee-49d0-a2a3-933797deeb0d",
+        "topic_id": "/////91mS+v/////0b8KtA",
+        "partition_count": 3
+      },
+      "start_offset": 0,
+      "next_offset": 5,
+      "mode": "LIVE",
+      "created_at": "2026-09-23T05:48:32.147466+00:00",
+      "updated_at": "2026-09-23T05:48:32.275856+00:00"
+    }
+  },
+  "live_legacy_checkpoints_before": {
+    "0": 6,
+    "1": 6,
+    "2": 5
+  },
+  "live_legacy_checkpoints_after": {
+    "0": 6,
+    "1": 6,
+    "2": 5
+  },
+  "live_broker_commits_before": {
+    "0": 6,
+    "1": 6,
+    "2": 5
+  },
+  "live_broker_commits_after": {
+    "0": 6,
+    "1": 6,
+    "2": 5
+  }
+}
